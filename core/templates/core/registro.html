@@ -1,0 +1,59 @@
+{% extends "core/layout.html" %}
+{% load static %}
+
+{% block title %}Ajustes de usuario{% endblock %}
+
+{% block head %}
+    <link href="registro.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link href="{% static 'core/css/registro.css' %}" rel="stylesheet" type="text/css">
+
+{% endblock %}
+
+{% block content %}
+
+<div  class="ratio ratio-16x9">
+    
+    <form id="formRegistro" method="post">
+        
+        {% csrf_token %}
+        <div class="form-group">
+            <h1>Crea Tu Cuenta</h1>
+        </div>
+        <div class="form-group" id="formNombre">
+            <label for=" exampleInputEmail1">Nombre</label>
+            <input type="text" class="form-control"     id="inputNombre" name="nombre">
+        </div>
+        <div class="form-group" id="formNombre">
+            <label for=" exampleInputEmail1">Apellido</label>
+            <input type="text" class="form-control"     id="inputNombre" name="apellido">
+        </div>
+        <div class="form-group" id="formCorreo">
+            <label for="exampleInputEmail1">Correo electrónico</label>
+            <input type="email" class="form-control" id="inputCorreo" aria-describedby="emailHelp" name="email">
+        </div>
+        <div class="form-group" id="formContraseña">
+            <label for="exampleInputPassword1">Contraseña</label>
+            <input type="password" class="form-control" id="inputContraseña" name="password">
+        </div>
+        <!-- {{ form.as_p }} -->
+       
+        <div id="boton">
+            <button type="submit" class="btn btn-info" id="btnRegistrarse">Registrarse</button>
+            <a href="{% url 'login' %}" class="btn btn-info" id="atras">Atrás</a>
+            
+        </div>
+        
+        {% if messages %}
+            {% for m in messages %}
+            <div class="notification {{ message.tags }}">
+                {{m}}
+            </div>
+            {% endfor %}
+        {% endif %}
+    </form>
+</div>
+
+
+{% endblock %}

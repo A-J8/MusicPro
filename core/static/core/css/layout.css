@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Chakra Petch', sans-serif;
+}
+
+header {
+    background: black;
+    color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+}
+
+.btn-group {
+    color: #ffffff !important;
+    font-family: 'Secular One', sans-serif !important;
+}
+
+#logo_header {
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
+#logo_header>a,img {
+    width: 25%;
+}
+
+#menu {
+    width: 30%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    text-align: right;
+}
+
+#menu>a {
+    text-decoration: none;
+    color: white;
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 10px;
+    font-family: 'Chakra Petch', sans-serif;
+}
+
+#menu>.btn-group:hover {
+    text-decoration: underline rgb(255, 255, 255) 5px;
+    transition-duration: 0.45s;
+
+}
+#menu>a:hover {
+    text-decoration: underline rgb(255, 255, 255) 5px;
+    transition-duration: 0.45s;
+
+}
+
+#menu li button>a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    font-family: 'Chakra Petch', sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    background-color: #ffffff;
+}
+
+footer {
+    font-family: 'Chakra Petch', sans-serif;
+    background: rgba(0, 0, 0, 0.986);
+    font-size: 5px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    text-align:center;
+    padding-top: 2%;
+}
+
+#info > p {
+    margin-left: 2%;
+    font-size: medium;
+}

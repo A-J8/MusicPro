@@ -1,0 +1,74 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block title %}MusicPro{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'core/css/carrito.css' %}">
+{% endblock %}  
+{% block content %}
+    <div id="contenido">
+        <div>
+            <h1>Cesta de Compras</h1>
+        </div>
+        <div class="carro">
+            <div class="table">
+                <table class="table">
+                    <thead>
+                        <tr id="columnas">
+                            <th scope="col">Producto</th>
+                            <th scope="col" style="display: flex; justify-content: center;">Cantidad</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    {% if request.session.carrito.items %}
+                    {% for key,value in request.session.carrito.items %}
+                    <tbody>
+                        <tr>
+                            <th id="producto">
+                                <div class="tituloProducto">
+                                    <h2>{{value.nombre}}</h2>
+                                </div>
+                            </th>
+                            <th id="cantidad">
+                                <div class="selector">
+                                    {% if key.stock != 0 %}
+                                        <a href="{% url 'Add' value.producto_id %}" class="badge btn btn-dark badge-dark" id="suma-resta">+</a>
+                                        <p>{{value.cantidad}}</p>
+                                        <a href="{% url 'Sub' value.producto_id %}" class="badge btn btn-dark badge-dark"  id="suma-resta">-</a>
+                                    {% else %}
+                                        <p>{{value.cantidad}}</p>
+                                    {% endif %}
+                                </div>
+                            </th>
+                            <th>
+                                <div>
+                                    <p id="valor">${{value.acumulado}}</p>
+                                </div>
+                            </th>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3">
+                                <div class="alert alert-danger text-center"> Sin Productos</div>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </table>
+            </div>
+            <div class="precio">
+
+                <div class="monto">
+                    <h3>Total</h3>
+                    <div id="total">
+                        <td colspan="3">${{total_carrito}} CLP</td>
+                    </div>
+                </div>
+                    <div class="comprar">
+                        <label for="delibery">Impuestos incluidos.</label>
+                        <a href="comprar/{{total_carrito}}" class="btn btn-danger" id="btn-comprar">Comprar</a>
+                    </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}  

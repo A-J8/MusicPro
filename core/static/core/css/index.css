@@ -1,0 +1,51 @@
+.producto{
+    color: black;
+    padding: 3%;
+    text-align: center;
+    padding: 3px 10px ;
+    border: black 5px solid;
+    border-radius: 20px;
+    background-color: rgb(214, 214, 214);
+}
+
+.cuadroProductos{
+    width: 90%;
+    padding: 5%;
+}
+
+#imgPro{
+    border: black 1px solid;
+    width: 350px;
+    height: 350px;
+}
+
+@media (max-width: 1201px ){
+    #imgPro{
+        width: 350px;
+        height: 350px; 
+    }
+}
+@media (max-width: 1025px ){
+    #imgPro{
+        width: 150px;
+        height: 150px; 
+    }
+}
+@media (max-width: 769px ){
+    #imgPro{
+        width: 100px;
+        height: 100px; 
+    }
+}
+@media (max-width: 481px ){
+    #imgPro{
+        width: 80px;
+        height: 80px; 
+    }
+}
+@media (max-width: 320px ){
+    #imgPro{
+        width: 50px;
+        height: 50px; 
+    }
+}

@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Righteous&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Chakra Petch', sans-serif;
+}
+
+body {
+    background-image: url("https://7televalencia.com/wp-content/uploads/2021/04/7televalencia-tiendas-discos.jpg");
+    background-repeat: no-repeat;
+    background-position: center center; 
+    background-size: cover;
+    background-attachment: fixed;
+    
+}
+
+#iconoRegistro {
+    margin-left: 40%;
+}
+
+h1{
+    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Righteous', cursive;
+    font-size: 32px;
+    margin-top: 3%;
+    display: flex;
+    justify-content: center;
+    color: white;
+}
+
+#formRegistro {
+    background-color: #030303ec;
+    border-radius: 10%;
+    color: white;
+    margin-top: 5%;
+    margin-left: 35%;
+    margin-bottom: 5%;
+    padding: 5%;
+    padding-top: 10%;
+    padding-left: 10%;
+    height: 40%;
+    width: 30%;
+    justify-content: center;
+}
+
+
+
+#btnRegistrarse{
+    margin-top: 1%;
+    margin-left: 1%;
+}
+
+#mapa{
+    margin-top: -3%;
+    margin-left: 0%;
+}
+#arrendar{
+    margin-left: 5%;
+    margin-top: 20%;
+}
+#map {
+	height: 500px;
+	width: 100%;
+}
+
+
+@media only screen and (max-width: 1500px ){
+    #formRegistro {
+        background-color: #030303ec;
+        color: white;
+        margin-top: 8%;
+        margin-left: 35%;
+        margin-bottom: 5%;
+        padding: 5%;
+        padding-top: 5%;
+        padding-left: -20%;
+        height: 75%;
+        width: 30%;
+        justify-content: center;
+    }
+
+    #atras{  
+        width: 100%;
+        margin-left: 1%;
+        margin-top: 5%;
+    }
+
+    #btnRegistrarse{
+        width: 100%;
+    }
+
+    #botones{
+        display: flex;
+        justify-content: center;
+    }
+
+} 
