@@ -26,6 +26,7 @@
         <div id="menu">
             <a href="{% url 'index' %}">Inicio</a>
             <a href="{% url 'carrito' %}">Carrito</a>
+            {% if user.is_authenticated %}
             <div class="btn-group">
                 <button id="iniciarsesion" type="button" class="btn  dropdown-toggle" data-bs-toggle="dropdown"
                     aria-expanded="false" style=" color: #ffffff"> 
@@ -38,6 +39,10 @@
                     </li>
                 </ul>
             </div>
+            {% else %}
+                <a href="#" style=" color: #ffffff">Iniciar sesión</a>
+                <a href="#" style=" color: #ffffff">Registrarse</a>
+            {% endif %}
         </div>
     </header>
 
