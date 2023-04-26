@@ -5,10 +5,13 @@ from django.views.static import serve
 
 urlpatterns = [
     path('', index, name="index"),
+    path('producto/<int:id>', producto, name="producto"),
     path('carrito', carrito, name="carrito"),
+    path('pago', pago, name="pago"),
     path('login', login, name="login"),
     path('registro', registro, name="registro"),
     path('admin', admin, name="admin"),
+    path('historial', historial, name="historial"),
 
 
     #funciones del carrito

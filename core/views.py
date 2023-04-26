@@ -7,13 +7,56 @@ def index(request):
     contexto = {'productos' : Producto.objects.all()}
     return render(request,'core/index.html', contexto)
 
+def producto(request, id):
+    producto = Producto.objects.get(id=id)
+    data = {
+        'producto': producto
+    }
+    return render(request, 'core/producto.html', data)
+
 def carrito(request):
     return render(request,'core/carrito.html'  )
 
+
+def pago(request):
+    return render(request,'core/pago.html'  )
+
+def historial(request):
+    return render(request,'core/historial.html'  )
+
+
+#inicio de sesion del usuario registrado
 def login(request):
-    return render(request,'core/login.html'  )
+    if request.method == 'POST':
+        try:
+            newUser = Usuario.objects.get(email = request.POST['email'], pwd = request.POST['password'])
+            request.session['email'] = newUser.email
+            return redirect('index')
+        except Usuario.DoesNotExist as e: 
+            messages.success(request, 'Correo o constraseña no son correctos')
+    return render(request, 'core/login.html')
+    
+
+
+#registra y valida un nuevo usuario
 def registro(request):
-    return render(request,'core/registro.html'  )
+    if request.method == 'POST':
+        #estructura de condicion que verifica si el usuario que se intenta registrar existe
+        if Usuario.objects.filter(email = request.POST['email']).exists(): # se verifica la existencia por el campo de email
+            messages.success(request, 'El usuario ingresado ya existe')
+        else:
+            #creacion del nuevo usuario, entre [] se coloca el atributo "name" de los input en el html
+            newUser = Usuario(
+                nombre = request.POST['nombre'],
+                apellido = request.POST['apellido'],
+                email = request.POST['email'],
+                pwd = request.POST['password'],
+                tipo_usuario = False
+            )
+            newUser.save()
+            # messages.success(request, 'Usuario registrado correctamente')
+            return redirect('login')
+    return render(request, 'core/registro.html')
 def admin(request):
     return render(request,'core/admin.html'  )    
 
@@ -48,11 +91,13 @@ def limpiar_producto(request):
     return redirect("carrito")
 
 def comprar(request, precio):
-    #codigo = 0
-    #codigo = precio *99/234
-    #newHistorial = Historial.objects.create( codigo =codigo  , precio = precio ,fecha = datetime.now() )
+    
+    #newHistorial = Historial.objects.create( precio = precio ,fecha = datetime.now() )
     for key, value in request.session["carrito"].items():
         carrito = Carrito(request)
         carrito.limpiar()
 
     return redirect('carrito')
+
+#def historial(request)
+#compra = compra.objects

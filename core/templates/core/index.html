@@ -6,6 +6,8 @@
 {% endblock %}
 {% block content %}
 
+
+
 <!--CARRUCEL-->
 <div id="carouselExampleFade" class="carousel slide carousel-fade" style="width: 100%;">
     <div class="carousel-inner">
@@ -36,12 +38,13 @@
     {% for i in productos %}
         <div class="col-sm-4 mb-4">
             <div class="producto">
-                <img id="imgPro" src="media/{{i.imagen}}" > 
-                <input type="hidden" id="id" name="id" value="{{i.id}}"> 
-                <h4>{{i.nombre}}</h4>
-                <p>precio: {{i.precio}}</p>
-                <p>stock: {{i.stock}}</p>
-                <a href="{% url 'Add' i.id %}" class="btn btn-secondary">Agregar al carrito</a>  
+              <img id="imgPro" src="media/{{i.imagen}}"> 
+              <input type="hidden" id="id" name="id" value="{{i.id}}"> 
+              <h4>{{i.nombre}}</h4>
+              <p>precio: {{i.precio}}</p>
+              <p>stock: {{i.stock}}</p>
+              <a href="{% url 'producto' i.id %}" class="btn btn-secondary">Mirar producto</a>
+              <a href="{% url 'Add' i.id %}" class="btn btn-secondary">Agregar al carrito</a>  
             </div>
         </div>
     {% endfor %}

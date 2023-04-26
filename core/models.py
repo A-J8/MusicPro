@@ -11,3 +11,15 @@ class Producto(models.Model):
     descripcion = models.CharField(max_length=500, default='')
     def __str__(self):
         return f'{self.nombre}'
+
+
+# Create models Usuario.
+class Usuario(models.Model):
+    nombre = models.CharField(max_length=16, )
+    apellido = models.CharField( max_length=16, null=False)
+    email = models.EmailField(primary_key=True, unique=True)
+    pwd = models.CharField(null=False, max_length=12)
+    tipo_usuario = models.BooleanField( max_length=16, default=False)
+    rut = models.CharField(max_length=10, default=0)
+    patente = models.CharField(max_length=8, default=0)
+
