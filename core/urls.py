@@ -11,8 +11,9 @@ urlpatterns = [
     path('login', login, name="login"),
     path('registro', registro, name="registro"),
     path('administrador', administrador, name="administrador"),
-    path('historial', historial, name="historial"),
     path('cerrarSesion', cerrarSesion, name="cerrarSesion"),
+    path('micuenta', micuenta, name="cuenta"),
+    path('historial', historial, name="historial"),
 
 
     #funciones del carrito
