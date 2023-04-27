@@ -26,6 +26,12 @@ def pago(request,):
 def historial(request):
     return render(request,'core/historial.html'  )
 
+def micuenta(request):
+    return render(request,'core/micuenta.html'  )
+
+def historial(request):
+    return render(request,'core/historial.html'  )
+
 
 #inicio de sesion del usuario registrado
 def login(request):
