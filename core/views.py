@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import *
 from .Carrito import *
+from django.contrib import messages
 from .forms import UserRegisterForm
 # Create your views here.
 
@@ -41,18 +42,23 @@ def login(request):
 
 #registra y valida un nuevo usuario
 def registro(request):
-	if request.method == 'POST':
-		form = UserRegisterForm(request.POST)
-		if form.is_valid():
-			form.save()
-			username = form.cleaned_data['username']
-			messages.success(request, f'Usuario {username} creado')
-			return redirect('/')
-	else:
-		form = UserRegisterForm()
-
-	context = { 'form' : form }
-	return render(request, 'core/registro.html', context)
+    if request.method == 'POST':
+        #estructura de condicion que verifica si el usuario que se intenta registrar existe
+        if Usuario.objects.filter(email = request.POST['email']).exists(): # se verifica la existencia por el campo de email
+            messages.success(request, 'El usuario ingresado ya existe')
+        else:
+            #creacion del nuevo usuario, entre [] se coloca el atributo "name" de los input en el html
+            newUser = Usuario(
+                nombre = request.POST['nombre'],
+                apellido = request.POST['apellido'],
+                email = request.POST['email'],
+                pwd = request.POST['password'],
+                tipo_usuario = False
+            )
+            newUser.save()
+            messages.success(request, 'Usuario registrado correctamente')
+            return redirect('login')
+    return render(request, 'core/registro.html')
 
 def administrador(request):
     return render(request,'core/administrador.html'  )    
