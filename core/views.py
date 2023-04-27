@@ -23,9 +23,6 @@ def carrito(request):
 def pago(request,):
     return render(request,'core/pago.html'  )
 
-def historial(request):
-    return render(request,'core/historial.html'  )
-
 def micuenta(request):
     return render(request,'core/micuenta.html'  )
 
