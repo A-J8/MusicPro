@@ -10,7 +10,7 @@ urlpatterns = [
     path('pago', pago, name="pago"),
     path('login', login, name="login"),
     path('registro', registro, name="registro"),
-    path('admin', admin, name="admin"),
+    path('administrador', administrador, name="administrador"),
     path('historial', historial, name="historial"),
 
 

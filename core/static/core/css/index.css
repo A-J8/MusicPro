@@ -1,11 +1,13 @@
+
 .producto{
     color: black;
     padding: 3%;
     text-align: center;
     padding: 3px 10px ;
-    border: black 5px solid;
-    border-radius: 20px;
+
     background-color: rgb(214, 214, 214);
+    border-style: outset;
+    box-shadow: 1px 2px 5px 5px rgb(44, 44, 44);
 }
 
 .cuadroProductos{

@@ -6,4 +6,27 @@
 {% endblock %}
 {% block content %}
 
+
+<div id="cuadro">
+    <a href="{% url 'index' %}"  class="btn btn-secondary">Volver</a>
+    <h1 style="display: flex; justify-content: center;">{{producto.nombre}}</h1>
+    <div style="display: flex;">
+        <div id="imagenProducto">
+            <img id="#" src="/{{producto.imagen}}"> 
+        </div>
+        <div id="datosProducto">
+            <div style="margin: 1%;">
+            <h3>Descripcion</h3> 
+            <p>{{producto.descripcion}}</p>
+            <p>Stock: {{producto.stock}}</p>
+            </div>
+            <div style="margin: 1%;">
+            <h4>Precio: ${{producto.precio}}</h4>
+            <a href="{% url 'Add' producto.id %}" class="btn btn-secondary">Agregar al carrito</a>  
+            </div>    
+        </div>
+    </div>
+</div>
+
+
 {% endblock %}

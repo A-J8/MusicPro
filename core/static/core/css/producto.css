@@ -1,0 +1,30 @@
+#cuadro{
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 80%;
+    background-color: rgb(255, 255, 255);
+    border-style: outset;
+    box-shadow: 5px 5px 50px 5px rgb(44, 44, 44);
+}
+
+#datosProducto{
+    border-left: 1px black solid;
+    border-top: 1px black solid;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#imagenProducto{
+    border-top: 1px black solid;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+#imagenProducto > img{
+
+    width: 90%;
+    height: 90%;
+}

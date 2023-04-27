@@ -38,7 +38,9 @@
     {% for i in productos %}
         <div class="col-sm-4 mb-4">
             <div class="producto">
-              <img id="imgPro" src="media/{{i.imagen}}"> 
+              
+              <img  id="imgPro" src="/{{i.imagen}}" class="figure-img img-fluid">
+             
               <input type="hidden" id="id" name="id" value="{{i.id}}"> 
               <h4>{{i.nombre}}</h4>
               <p>precio: {{i.precio}}</p>
