@@ -65,8 +65,13 @@
                     </div>
                 </div>
                     <div class="comprar">
+                        {% if request.session.carrito.items %}
                         <label for="delibery">Impuestos incluidos.</label>
                         <a href="{% url 'pago' %}" class="btn btn-danger" id="btn-comprar">Continuar compra</a>
+                        {% else %}
+                        <p>¡Tú carrito está vacío!</p>
+                        <a href="{% url 'index' %}" class="btn btn-danger ">Ir a comprar</a>
+                        {% endif %}
                         <!-- href= "comprar/{{total_carrito}}" -->
                     </div>
             </div>
