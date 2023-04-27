@@ -1,12 +1,38 @@
 {% extends "core/layout.html" %}
 {% load static %}
-
-{% block title %}Ajustes de usuario{% endblock %}
-
+{% block title %}MusicPro{% endblock %}
 {% block head %}
+<link rel="stylesheet" href="{% static 'core/css/micuenta.css' %}">
+{% endblock %}  
+{% block content %}
+
+<h1>Historial de compras</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Producto</th>
+            <th>Precio unitario</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for compra in compras %}
+            <tr>
+                <td>{{ compra.fecha }}</td>
+                <td>{{ compra.producto.nombre }}</td>
+                <td>{{ compra.producto.precio }}</td>
+                <td>{{ compra.cantidad }}</td>
+                <td>{{ compra.total }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5">No se encontraron compras.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 
-
-
-{% endblock %}
-
+{% endblock %}  
