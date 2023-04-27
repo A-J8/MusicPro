@@ -104,3 +104,10 @@ def comprar(request, precio):
 
 #def historial(request)
 #compra = compra.objects
+
+# elimina la sesion iniciada.
+def cerrarSesion(request):
+    del request.session['email']
+    request.session.modified = True
+    messages.success(request, 'Sesion Cerrada')
+    return render(request, 'core/index.html')
