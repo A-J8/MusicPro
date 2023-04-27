@@ -7,7 +7,7 @@ urlpatterns = [
     path('', index, name="index"),
     path('producto/<int:id>', producto, name="producto"),
     path('carrito', carrito, name="carrito"),
-    path('pago', pago, name="pago"),
+    path('pago/', pago, name="pago"),
     path('login', login, name="login"),
     path('registro', registro, name="registro"),
     path('administrador', administrador, name="administrador"),
@@ -20,7 +20,7 @@ urlpatterns = [
     path('eliminar/<int:producto_id>', eliminar_producto, name="Del"),
     path('restar/<int:producto_id>', restar_producto, name="Sub"),
     path('limpiar/', limpiar_producto, name="cls"),
-    path('comprar/<int:precio>', comprar, name="comprar"),
+    path('comprar', comprar, name="comprar"),
 
 
     re_path(r'^media/(?P<path>.*)$', serve, {

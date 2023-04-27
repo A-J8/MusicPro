@@ -20,7 +20,7 @@ def carrito(request):
     return render(request,'core/carrito.html'  )
 
 
-def pago(request):
+def pago(request,):
     return render(request,'core/pago.html'  )
 
 def historial(request):
@@ -93,7 +93,7 @@ def limpiar_producto(request):
     carrito.limpiar()
     return redirect("carrito")
 
-def comprar(request, precio):
+def comprar(request):
     
     #newHistorial = Historial.objects.create( precio = precio ,fecha = datetime.now() )
     for key, value in request.session["carrito"].items():

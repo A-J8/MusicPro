@@ -47,7 +47,49 @@
         </div>
     </div>
     {% if "email" in request.session %}
-        Logueado
+    <form id="DatosCliente">
+        <h2>1. Información de Pago</h2>
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required="">
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" required=""><br><br>
+            <label for="email">Correo Electronico:</label>
+            <input type="email" id="email" name="email" required="">
+            <label for="rut">Rut:</label>
+            <input type="text" id="rut" name="rut" required=""><br><br>
+            <label for="telefono">Telefono:</label>
+            <input type="text" id="telefono" name="telefono" required=""><br><br>
+
+            <button id="btn-opcion" class="btn btn-dark">Continuar</button>
+            <br><br>
+        </div>
+
+
+        <h2>2. Envio</h2>
+        <div id="myOption" style="display: none;">
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" name="direccion" required="" >
+            <label for="ciudad">Ciudad:</label>
+            <input type="text" id="ciudad" name="ciudad" required=""><br><br>
+            <label for="estado">Estado:</label>
+            <input type="text" id="estado" name="estado" required="">
+            <label for="codigo_postal">Código Postal:</label>
+            <input type="text" id="codigo_postal" name="codigo_postal" required=""><br><br>
+
+            <button id="btn-opcion2" class="btn btn-dark">Continuar</button>
+            <br><br>
+        </div>
+        <h2>3. Pago</h2>
+        <div id="myOption2" style="display: none;">
+            <input type="radio" name="Webpay" id="1" required> ---
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIYZgSlplNsbihDH6JYCj5jtAdaZ-ATKXS9h_6wEJ8okjdZ5Wf5tfMZLjMHIuMQNMFPWY&usqp=CAU"
+                alt=""><br><br>
+            <input type="radio" name="Webpay" id="2" required> --- Transferencia. <br><br>
+            <button type="submit"><a href="{% url 'comprar' %}">Finalizar compra</a></button>
+        </div>
+
+    </form>
     {% else %}
     <form id="DatosCliente">
         <h2>1. Información de Pago</h2>
