@@ -7,13 +7,14 @@ urlpatterns = [
     path('', index, name="index"),
     path('producto/<int:id>', producto, name="producto"),
     path('carrito', carrito, name="carrito"),
-    path('pago/', pago, name="pago"),
+    path('pago', pago, name="pago"),
     path('login', login, name="login"),
     path('registro', registro, name="registro"),
     path('administrador', administrador, name="administrador"),
     path('cerrarSesion', cerrarSesion, name="cerrarSesion"),
-    path('micuenta', micuenta, name="cuenta"),
+    path('micuenta', micuenta, name="micuenta"),
     path('historial', historial, name="historial"),
+    path('contador', contador, name="contador"),
 
 
     #funciones del carrito

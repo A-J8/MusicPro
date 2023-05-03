@@ -1,49 +1,55 @@
 *{
-    margin:0;
-    padding: 0;
+  margin:0;
+  padding: 0;
 }
 
 #contenido{
-    display: flex;
-    justify-content: space-around;
-    width: 80%;
-    padding: 20px;
-    margin: 20px 0 20px 10px;
-    background-color: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
-    border-style: outset;
-    box-shadow: 5px 5px 50px 5px rgb(44, 44, 44);
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  padding: 20px;
+  margin: 20px 0 20px 10px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  border-style: outset;
+  box-shadow: 5px 5px 50px 5px rgb(44, 44, 44);
 }
 
 #DatosCliente{
-    width: 50%;
-    margin: 0 auto;
-    font-family: Arial, sans-serif;
-  }
-  label {
-    display: inline-block;
+  width: 50%;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+label {
+  display: inline-block;
+  width: 100px;
+  text-align: right;
+  margin-right: 20px;
+}
+input[type="text"] {
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+input[type="radio"] {
+  margin-right: 10px;
+}
+input[type="submit"] {
+  background-color: #008CBA;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+input[type="submit"]:hover {
+  background-color: #006B9F;
+}
+
+@media screen and (max-width: 1690px) {
+  #Formcliente{
     width: 100px;
-    text-align: right;
-    margin-right: 20px;
   }
-  input[type="text"] {
-    width: 200px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    margin-bottom: 10px;
-  }
-  input[type="radio"] {
-    margin-right: 10px;
-  }
-  input[type="submit"] {
-    background-color: #008CBA;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  input[type="submit"]:hover {
-    background-color: #006B9F;
-  }
+}

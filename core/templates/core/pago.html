@@ -49,7 +49,7 @@
     {% if "email" in request.session %}
     <form id="DatosCliente">
         <h2>1. Información de Pago</h2>
-        <div>
+        <div id="Formcliente">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required="">
             <label for="apellido">Apellido:</label>
@@ -93,7 +93,7 @@
     {% else %}
     <form id="DatosCliente">
         <h2>1. Información de Pago</h2>
-        <div>
+        <div id="Formcliente">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required="">
             <label for="apellido">Apellido:</label>

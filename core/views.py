@@ -29,6 +29,9 @@ def micuenta(request):
 def historial(request):
     return render(request,'core/historial.html'  )
 
+def contador(request):
+    return render(request, 'core/contador.html')
+
 
 #inicio de sesion del usuario registrado
 def login(request):
@@ -105,8 +108,8 @@ def comprar(request):
 
     return redirect('carrito')
 
-#def historial(request)
-#compra = compra.objects
+# def historial(request)
+# compra = compra.objects
 
 # elimina la sesion iniciada.
 def cerrarSesion(request):
@@ -114,3 +117,4 @@ def cerrarSesion(request):
     request.session.modified = True
     messages.success(request, 'Sesion Cerrada')
     return render(request, 'core/index.html')
+

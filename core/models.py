@@ -23,3 +23,14 @@ class Usuario(models.Model):
     rut = models.CharField(max_length=10, default=0)
     patente = models.CharField(max_length=8, default=0)
 
+
+# create models historial
+
+class Historial(models.Model):
+    fecha = models.DateTimeField(auto_now=False, auto_now_add=False)
+    nombre = models.CharField(max_length=40)
+    precio = models.IntegerField(default=0)
+    cantidad = models.IntegerField(default=0)
+    total = models.IntegerField(default=0)
+    estado = models.CharField(max_length=40)
+    envio = models.CharField(max_length=40)

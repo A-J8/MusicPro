@@ -24,13 +24,13 @@ body {
 h1{
     font-family: 'Archivo Black', sans-serif;
     font-family: 'Righteous', cursive;
-    font-size: 50px;
+    font-size: 60px;
     margin-top: 7%;
     display: flex;
     justify-content: center;
     color: white;
 }
-
+/* #030303ec */
 #formLogin {
     background-color: #030303ec;
     border-radius: 10%;
@@ -53,8 +53,9 @@ h1{
 #btnRegistrarse{
     margin-top: -19%;
     margin-left: 50%;
-    
 }
+    
+
 
 
 .grid-container {
@@ -70,7 +71,7 @@ h1{
         margin-left: 32%;
         margin-bottom: 5%;
         padding: 5%;
-        height: 75%;
+        height: 65%;
         width: 36%;
         justify-content: center;
     }
