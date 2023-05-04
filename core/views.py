@@ -2,7 +2,10 @@ from django.shortcuts import render, redirect
 from .models import *
 from .Carrito import *
 from django.contrib import messages
-from .forms import UserRegisterForm
+# from .forms import UserRegisterForm
+from django.shortcuts import render
+
+from .models import *
 # Create your views here.
 
 def index(request):
@@ -106,7 +109,13 @@ def comprar(request):
         carrito = Carrito(request)
         carrito.limpiar()
 
-    return redirect('carrito')
+    return render(request,'core/index.html')
+
+def datoTransferencia(request):
+    for key, value in request.session["carrito"].items():
+        carrito = Carrito(request)
+        carrito.limpiar()
+    return render(request,'core/datoTransferencia.html')
 
 # def historial(request)
 # compra = compra.objects
@@ -118,3 +127,48 @@ def cerrarSesion(request):
     messages.success(request, 'Sesion Cerrada')
     return render(request, 'core/index.html')
 
+
+#Guarda datos del usario elegido.
+
+def confirmarDatos(request):
+    nombre = request.POST['nombreEs'] 
+    apellido = request.POST['apellidoEs'] 
+    user= request.session['email']
+    telefono = request.POST['telefono']
+    codigoPostal = request.POST['codigoPostal']
+    estado = request.POST['estado']
+    ciudad = request.POST['ciudad']
+    rut = request.POST['rut']
+    direccion = request.POST['direccion']
+    newPruebasEs = PruebasEs(user = user, nombreEs = nombre, apellidoEs = apellido ,telefono = telefono, codigoPostal = codigoPostal, estado = estado , ciudad = ciudad , direccion = direccion)
+    newUser = Usuario.objects.get(email = user)
+    newUser.rut = rut
+    newUser.direccion = direccion
+    print("funca")
+    newUser.save()
+    newPruebasEs.save()
+    return redirect('index')
+
+# def transferencia(request):
+#     for key, value in request.session["carrito"].items():
+#         carrito = Carrito(request)
+#         carrito.limpiar()
+#     return redirect( request, 'core/datoTransferencia.html')
+
+
+
+
+def historial_compras(request):
+    compras = historial.objects.filter(usuario=request.user).order_by('-fecha_compra')
+    return render(request, 'historial.html', {'compra': compras})
+
+
+
+def editar(request, email = id):
+    usuario = usuario.objects.get(id = email)
+    if request.method == 'POST':
+        form = usuario(request.POST, instance=usuario)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+        

@@ -18,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for compra in compras %}
+        {% for compra in Historial %}
             <tr>
                 <td>{{ compra.fecha }}</td>
                 <td>{{ compra.producto.nombre }}</td>
@@ -33,6 +33,4 @@
         {% endfor %}
     </tbody>
 </table>
-
-
 {% endblock %}  

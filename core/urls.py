@@ -15,7 +15,10 @@ urlpatterns = [
     path('micuenta', micuenta, name="micuenta"),
     path('historial', historial, name="historial"),
     path('contador', contador, name="contador"),
+    path('comprar', comprar, name="comprar"),
+    path('datoTransferencia', datoTransferencia, name="datoTransferencia"),
 
+    path('confirmarDatos/<nombre>',confirmarDatos, name="confirmarDatos"),
 
     #funciones del carrito
     path('agregar/<int:producto_id>', agregar_producto, name="Add"),

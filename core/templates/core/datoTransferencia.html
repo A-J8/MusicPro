@@ -1,0 +1,37 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block title %}MusicPro{% endblock %}
+{% block head %}
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Last-Modified" content="0">
+<meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+<meta http-equiv="Pragma" content="no-cache">
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{% static 'core/css/pago.css' %}">
+{% endblock %}
+{% block content %}
+<div id="contenido" style="#contenido{
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    padding: 20px;
+    margin: 20px 0 20px 10px;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border-style: outset;
+    box-shadow: 5px 5px 50px 5px rgb(44, 44, 44);
+  }">
+    <div id="datosTransferencia">
+        <h5>Datos de Transferencia</h5>
+        <p>Banco: Santander</p>
+        <p>Cuenta corriente: 0002324334</p>
+        <p>Nombre: VentasMusicPro</p>
+    </div>
+    <a href="{% url 'index' %}" class="btn btn-dark " >Volver al inicio</a>
+</div>
+
+
+{% endblock %}

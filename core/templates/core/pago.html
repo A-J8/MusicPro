@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="{% static 'core/css/pago.css' %}">
 {% endblock %}
 {% block content %}
+
 <div id="contenido">
     <div style="width: 40%;">
         <table class="table">
@@ -47,46 +48,55 @@
         </div>
     </div>
     {% if "email" in request.session %}
-    <form id="DatosCliente">
+    
+    <form id="DatosCliente" action="/confirmarDatos/{{ usuario.email }}" method="post">
         <h2>1. Información de Pago</h2>
+        {% csrf_token %}
         <div id="Formcliente">
             <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required="">
+            <!-- <input type="text" id="nombre" name="nombre" required="" value="{{ usuario.nombre }}" > -->
+            <input type="text" class="form-control" id="inputNombre" name="nombreEs" value="{{ usuario.nombre }}"
+                readonly> </input>
             <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" name="apellido" required=""><br><br>
+            <input type="text" id="apellido" name="apellido" required="" value="{{ usuario.apellido }}"
+                ><br><br>
             <label for="email">Correo Electronico:</label>
-            <input type="email" id="email" name="email" required="">
+            <input type="email" id="email" name="email" required="" value="{{ usuario.user }}" >
             <label for="rut">Rut:</label>
-            <input type="text" id="rut" name="rut" required=""><br><br>
+            <input type="text" id="rut" name="rut" required="" value="{{ usuario.rut }}" ><br><br>
             <label for="telefono">Telefono:</label>
-            <input type="text" id="telefono" name="telefono" required=""><br><br>
+            <input type="text" id="telefono" name="telefono" required="" value="{{ usuario.telefono }}"
+                ><br><br>
 
             <button id="btn-opcion" class="btn btn-dark">Continuar</button>
             <br><br>
         </div>
 
-
+        
         <h2>2. Envio</h2>
         <div id="myOption" style="display: none;">
             <label for="direccion">Dirección:</label>
-            <input type="text" id="direccion" name="direccion" required="" >
+            <input type="text" id="direccion" name="direccion" required="" value="{{ usuario.direccion }}" >
             <label for="ciudad">Ciudad:</label>
-            <input type="text" id="ciudad" name="ciudad" required=""><br><br>
+            <input type="text" id="ciudad" name="ciudad" required="" value="{{ usuario.ciudad }}" ><br><br>
             <label for="estado">Estado:</label>
-            <input type="text" id="estado" name="estado" required="">
+            <input type="text" id="estado" name="estado" required="" value="{{ usuario.estado }}" >
             <label for="codigo_postal">Código Postal:</label>
-            <input type="text" id="codigo_postal" name="codigo_postal" required=""><br><br>
-
+            <input type="text" id="codigo_postal" name="codigo_postal" required="" value="{{ usuario.codigoPostal }}"
+                ><br><br>
+                
+            <!-- <button type="submit" class="btn btn-success" id="btnGuardar">Arrendar</button> -->
             <button id="btn-opcion2" class="btn btn-dark">Continuar</button>
             <br><br>
         </div>
         <h2>3. Pago</h2>
         <div id="myOption2" style="display: none;">
-            <input type="radio" name="Webpay" id="1" required> ---
+            <input type="radio" name="pago" id="webpay" value="webpay" required> ---
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIYZgSlplNsbihDH6JYCj5jtAdaZ-ATKXS9h_6wEJ8okjdZ5Wf5tfMZLjMHIuMQNMFPWY&usqp=CAU"
                 alt=""><br><br>
-            <input type="radio" name="Webpay" id="2" required> --- Transferencia. <br><br>
-            <button type="submit"><a href="{% url 'comprar' %}">Finalizar compra</a></button>
+            <input type="radio" name="pago" id="transferencia" value="transferencia" onclick="guardarValor()"
+                required> --- Transferencia. <br><br>
+            <button type="submit"><a href="" onclick="transf" c id="comprar">Finalizar compra</a></button>
         </div>
 
     </form>
@@ -127,16 +137,18 @@
         </div>
         <h2>3. Pago</h2>
         <div id="myOption2" style="display: none;">
-            <input type="radio" name="Webpay" id="1" required> ---
+            <input type="radio" name="MetodPago" id="webpay" value="webpay" required> ---
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIYZgSlplNsbihDH6JYCj5jtAdaZ-ATKXS9h_6wEJ8okjdZ5Wf5tfMZLjMHIuMQNMFPWY&usqp=CAU"
                 alt=""><br><br>
-            <input type="radio" name="Webpay" id="2" required> --- Transferencia. <br><br>
-            <button type="submit"><a href="comprar/{{total_carrito}}">Finalizar compra</a></button>
+            <input type="radio" name="MetodPago" id="transferencia" value="transferencia" required> --- Transferencia.
+            <br><br>
+            <div id="datosTransferencia" style="display: none;">HolaHola</div>
+            <button type="submit"><a href="">Finalizar compra</a></button>
         </div>
 
     </form>
     {% endif %}
-    
+    <script src="{% static 'core/js/enviar_correo.js' %}"></script>
     <script src="{% static 'core/js/mostrar.js' %}"></script>
 </div>
 {% endblock %}

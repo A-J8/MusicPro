@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.forms import ModelForm
+from multiprocessing.dummy import Value
 # Create your models here.
 
 
@@ -21,13 +22,12 @@ class Usuario(models.Model):
     pwd = models.CharField(null=False, max_length=12)
     tipo_usuario = models.BooleanField( max_length=16, default=False)
     rut = models.CharField(max_length=10, default=0)
-    patente = models.CharField(max_length=8, default=0)
+    direccion = models.CharField(max_length=50, null=False, default= '')
 
 
 # create models historial
 
 class Historial(models.Model):
-    id = models.IntegerChoices(id="producto")
     fecha = models.DateTimeField(auto_now=False, auto_now_add=False)
     nombre = models.CharField(max_length=40)
     precio = models.IntegerField(default=0)
@@ -35,3 +35,19 @@ class Historial(models.Model):
     total = models.IntegerField(default=0)
     estado = models.CharField(max_length=40)
     envio = models.CharField(max_length=40)
+
+
+
+# #ejemplo en prueba
+class PruebasEs(models.Model):
+    user = models.EmailField(primary_key=True, max_length=50)
+    nombreEs = models.CharField( max_length=50, null=False,default= '')
+    apellidoEs = models.CharField( max_length=50, null=False,default= '')
+    telefono = models.CharField(max_length=10, default=0)
+    codigoPostal = models.IntegerField( default= 0)
+    rut = models.CharField(max_length=10, default=0)
+    estado = models.CharField(max_length=50)
+    ciudad = models.CharField(max_length=50)
+    direccion = models.CharField(max_length=50)
+
+

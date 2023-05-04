@@ -25,7 +25,6 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     {% block head %}{% endblock %}
 </head>
-
 <body class="d-flex flex-column align-items-center min-vh-100">
 
     <header style="min-width: 100%;">
@@ -52,8 +51,9 @@
                                 Mi Cuenta
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Perfil</a></li>
-                                <li><a class="nav-link active" href="{% url 'historial' %}">Historial</a></li>
+                                <li><a class="dropdown-item" href="{% url 'micuenta' %}">Perfil</a></li>
+                                <!-- #class="nav-link active" -->
+                                <li><a class="dropdown-item" href="{% url 'historial' %}">Historial</a></li>
                                 <li><a class="dropdown-item" href="{% url 'cerrarSesion' %}">Cerrar Sesion</a></li>
                             </ul>
                         </li>

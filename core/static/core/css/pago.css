@@ -50,6 +50,14 @@ input[type="submit"]:hover {
 
 @media screen and (max-width: 1690px) {
   #Formcliente{
-    width: 100px;
+    width: 150px;
+  }
+
+  #myOption{
+    width: 150px;
+  }
+
+  #myOption2{
+    width: 150px;
   }
 }
