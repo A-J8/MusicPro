@@ -27,6 +27,7 @@ class Usuario(models.Model):
 # create models historial
 
 class Historial(models.Model):
+    id = models.IntegerChoices(id="producto")
     fecha = models.DateTimeField(auto_now=False, auto_now_add=False)
     nombre = models.CharField(max_length=40)
     precio = models.IntegerField(default=0)
