@@ -31,6 +31,18 @@ class Usuario(models.Model):
     estado = models.CharField(max_length=50, default= '')
     ciudad = models.CharField(max_length=50, default= '')
 
+
+
+class UsuarioInvitado(models.Model):
+    nombre = models.CharField(max_length=16, )
+    apellido = models.CharField( max_length=16, null=False)
+    email = models.EmailField(primary_key=True, unique=True)
+    rut = models.CharField(max_length=10, default= '')
+    direccion = models.CharField(max_length=50, null=False, default= '')
+    telefono = models.CharField(max_length=10, default=0)
+    codigoPostal = models.IntegerField(max_length=50, default= 0)
+    estado = models.CharField(max_length=50, default= '')
+    ciudad = models.CharField(max_length=50, default= '')
 # create models historial
 
 class Historial(models.Model):

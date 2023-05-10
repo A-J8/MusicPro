@@ -47,19 +47,19 @@
             </div>
         </div>
     </div>
-    <form id="DatosCliente" action="/confirmarDatos/{{ usuario.email }}" method="post">
+    <form id="DatosCliente" action="/datoInvitado/" method="post">
         <h2>1. Información de Pago</h2>
         {% csrf_token %}
-        <div id="Formcliente" style="display: block;">
+        <div id="Formcliente"  style="display: block;">
             <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" value="{{ usuario.nombre }}" readonly> </input>
+            <input type="text" id="nombre" name="nombre"  required> </input>
             <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" name="apellido" required="" value="{{ usuario.apellido }}"
-            readonly><br><br>
+            <input type="text" id="apellido" name="apellido" required="" 
+            ><br><br>
             <label for="email">Correo Electronico:</label>
-            <input type="email" id="email" name="email" required="" value="{{ usuario.email }}"  readonly>
+            <input type="email" id="email" name="email" required=""  >
             <label for="rut">Rut:</label>
-            <input type="text" id="rut" name="rut" required=""  maxlength="10"  ><br><br>
+            <input type="text" id="rut" name="rut" required=""  maxlength="10" required ><br><br>
             <label for="telefono">Telefono:</label>
             <input type="text" id="telefono" name="telefono" required="" maxlength="12"
                 ><br><br>

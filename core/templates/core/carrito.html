@@ -63,7 +63,7 @@
                         <td colspan="3">${{total_carrito}} CLP</td>
                     </div>
                 </div>
-                    {% if "email" in request.session %}
+                {% if "email" in request.session %}
                     {% for i in usuario %}
                     <div class="comprar" >
                         {% if request.session.carrito.items %}
@@ -75,12 +75,17 @@
                         {% endif %}
                     </div>
                     {% endfor %}
-                    {% else %}
-                    {% if request.carrito.items %}
-                        <p>¡Tú carrito está vacío!</p>
-                        <a href="{% url 'index' %}" class="btn btn-danger ">Ir a comprar</a>
-                    {% endif %}
-                    {% endif %}
+                {% else%}
+                    <div class="comprar" >
+                            {% if request.session.carrito.items %}
+                                    <label for="delivery">Impuestos incluidos.</label>
+                                    <a href="{% url 'pagoInvitado1'  %}" class="btn btn-danger" id="btn-comprar">Continuar compra</a> 
+                            {% else %}
+                                <p>¡Tú carrito está vacío!</p>
+                                <a href="{% url 'index' %}" class="btn btn-danger ">Ir a comprar</a>
+                            {% endif %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

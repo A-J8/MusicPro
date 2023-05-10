@@ -31,6 +31,9 @@ def pago(request, email):
     usuario = Usuario.objects.get(email = email)
     return render(request,'core/pago.html' ,  {'usuario':usuario})
 
+def pagoInvitado1(request):
+    return render(request,'core/pagoInvitado.html' )
+
 def micuenta(request):
     return render(request,'core/micuenta.html'  )
 
@@ -152,7 +155,7 @@ def confirmarDatos(request):
     estado = request.POST['estado']
     codigoPostal = request.POST['codigo_postal']
 
-    newPruebasEs = PruebasEs(user = user, apellidoEs = apellido, rut = rut ,telefono = telefono, codigoPostal = codigoPostal, estado = estado , ciudad = ciudad , direccion = direccion)
+    newPruebasEs = PruebasEs    (user = user, apellidoEs = apellido, rut = rut ,telefono = telefono, codigoPostal = codigoPostal, estado = estado , ciudad = ciudad , direccion = direccion)
     
     newUser = Usuario.objects.get(email = user)
     newUser.rut = rut
@@ -168,6 +171,31 @@ def confirmarDatos(request):
         carrito.limpiar()
     return redirect('index')
 
+def datoInvitado(request):
+    if request.method == 'POST':
+        newUserinvitado = UsuarioInvitado(
+            nombre = request.POST['nombre'],
+            apellido = request.POST['apellido'], 
+            email= request.POST['email'],
+            rut = request.POST['rut'],
+            telefono = request.POST['telefono'],
+            direccion = request.POST['direccion'],
+            ciudad = request.POST['ciudad'],
+            estado = request.POST['estado'],
+            codigoPostal = request.POST['codigo_postal']         
+        )
+        print("funca1")
+
+        newUserinvitado.save()
+        print("funca2")
+        for key, value in request.session["carrito"].items():
+            carrito = Carrito(request)
+            carrito.limpiar()
+        return redirect('index')
+    else:
+        print("nofunca3")
+        return redirect('carrito')
+        
 # def transferencia(request):
 #     for key, value in request.session["carrito"].items():
 #         carrito = Carrito(request)
