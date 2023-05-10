@@ -20,11 +20,16 @@ def producto(request, id):
     return render(request, 'core/producto.html', data)
 
 def carrito(request):
-    return render(request,'core/carrito.html'  )
+    if "email" in request.session:
+        usuario = Usuario.objects.filter(email = request.session['email'])
+    else:
+        usuario = 1
+    return render(request,'core/carrito.html', {'usuario':usuario}  )
 
 
-def pago(request,):
-    return render(request,'core/pago.html'  )
+def pago(request, email):
+    usuario = Usuario.objects.get(email = email)
+    return render(request,'core/pago.html' ,  {'usuario':usuario})
 
 def micuenta(request):
     return render(request,'core/micuenta.html'  )
@@ -33,7 +38,13 @@ def historial(request):
     return render(request,'core/historial.html'  )
 
 def contador(request):
-    return render(request, 'core/contador.html')
+    contexto = {'historial' : Historial.objects.all()}
+    return render(request, 'core/contador.html', contexto)
+
+def historial(request):
+    compras = Historial.objects.all().order_by('-fecha')
+    return render(request, 'core/historial.html', {'compras': compras})
+
 
 
 #inicio de sesion del usuario registrado
@@ -131,22 +142,30 @@ def cerrarSesion(request):
 #Guarda datos del usario elegido.
 
 def confirmarDatos(request):
-    nombre = request.POST['nombreEs'] 
-    apellido = request.POST['apellidoEs'] 
+    apellido = request.POST['apellido'] 
     user= request.session['email']
-    telefono = request.POST['telefono']
-    codigoPostal = request.POST['codigoPostal']
-    estado = request.POST['estado']
-    ciudad = request.POST['ciudad']
     rut = request.POST['rut']
+    telefono = request.POST['telefono']
+
     direccion = request.POST['direccion']
-    newPruebasEs = PruebasEs(user = user, nombreEs = nombre, apellidoEs = apellido ,telefono = telefono, codigoPostal = codigoPostal, estado = estado , ciudad = ciudad , direccion = direccion)
+    ciudad = request.POST['ciudad']
+    estado = request.POST['estado']
+    codigoPostal = request.POST['codigo_postal']
+
+    newPruebasEs = PruebasEs(user = user, apellidoEs = apellido, rut = rut ,telefono = telefono, codigoPostal = codigoPostal, estado = estado , ciudad = ciudad , direccion = direccion)
+    
     newUser = Usuario.objects.get(email = user)
     newUser.rut = rut
+    newUser.estado = estado
+    newUser.codigoPostal = codigoPostal
     newUser.direccion = direccion
     print("funca")
     newUser.save()
     newPruebasEs.save()
+
+    for key, value in request.session["carrito"].items():
+        carrito = Carrito(request)
+        carrito.limpiar()
     return redirect('index')
 
 # def transferencia(request):
@@ -154,13 +173,6 @@ def confirmarDatos(request):
 #         carrito = Carrito(request)
 #         carrito.limpiar()
 #     return redirect( request, 'core/datoTransferencia.html')
-
-
-
-
-def historial_compras(request):
-    compras = historial.objects.filter(usuario=request.user).order_by('-fecha_compra')
-    return render(request, 'historial.html', {'compra': compras})
 
 
 
@@ -172,3 +184,15 @@ def editar(request, email = id):
             form.save()
             return redirect('index')
         
+#FUNCION CONTADOR
+def cambiarEstadoPago(request, id):
+    contexto = {'historial' : Historial.objects.all()}
+    historial = Historial.objects.get(id=id)
+    if historial.estadoPago == True:
+        historial.estadoPago = False  # cambia el estado a lo opuesto
+        historial.save()
+    else:
+        historial.estadoPago = True
+        historial.save()
+    return render(request, 'core/contador.html', contexto)
+

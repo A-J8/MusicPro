@@ -32,6 +32,12 @@
 </div>
 
 <!--MARKETPLACE PRODUCTOS-->
+
+{% if request.user.is_authenticated and usuario %}
+  <h1>HOLAAAA COMO ESTAY</h1>
+{% else %}
+  <H1>bROMITA MI REY AUTENTIQUEZE</H1>
+{% endif %}
 <div class="cuadroProductos">
     <h1 style="display: flex; justify-content: center; font-size: 500%;">Productos</h1>
     <div class="row row-cols-3">

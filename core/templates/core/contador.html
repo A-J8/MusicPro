@@ -91,39 +91,32 @@
                 <th scope="col">Codigo compra</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Total</th>
+                <th scope="col">Tipo pago</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Cambiar estado</th>
               </tr>
             </thead>
             <tbody>
+              {% for i in historial %}
               <tr>
-                <td>1,001</td>
-                <td>01/02/2023</td>
-                <td>10.000</td>
-                <td>Procesando</td>
-                <td><button onclick="cambiarEstado(this)">Cambiar</button></td>
-              </tr>
-              <tr>
-                <td>1,002</td>
-                <td>01/02/2023</td>
-                <td>10.000</td>
-                <td>Procesando</td>
-                <td><button onclick="cambiarEstado(this)">Cambiar</button></td>
-              </tr>
-              <tr>
-                <td>1,003</td>
-                <td>01/02/2023</td>
-                <td>10.000</td>
-                <td>Procesando</td>
-                <td><button onclick="cambiarEstado(this)">Cambiar</button></td>
-              </tr>
-              <tr>
-                <td>1,003</td>
-                <td>01/02/2023</td>
-                <td>10.000</td>
-                <td>Procesando</td>
-                <td><button onclick="cambiarEstado(this)">Cambiar</button></td>
-              </tr>
+                <td>{{i.id}}</td>
+                <td>{{i.fecha|date:"d/m/Y"}}</td>
+                <td>{{i.total}}</td>
+                <td>{% if i.tipoPago %}
+                    Transferencia
+                  {% else %}
+                    Transbank
+                  {% endif %}
+                </td>
+                <td>{% if i.estadoPago %}
+                  Aprobado
+                {% else %}
+                  Rechazado
+                {% endif %} 
+              </td>
+               
+                <td> <a href="{% url 'cambiarEstadoPago' i.id %}">Cambiar</a> </td>
+              {% endfor %} 
             </tbody>
           </table>
         </div>

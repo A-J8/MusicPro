@@ -1,22 +1,69 @@
 var myButton = document.getElementById("btn-opcion");
 var myOption = document.getElementById("myOption");
+var myOption1 = document.getElementById("Formcliente");
+var rut = document.getElementById("rut");
+var telefono = document.getElementById("telefono");
 myButton.addEventListener("click", function(){
-if (myOption.style.display === "none") {
-    myOption.style.display = "block";
-} else {
-    myOption.style.display = "none";
-}
+if (rut.value === '') {
+
+}else{
+    if (telefono.value === '') {
+    
+    }else{
+        if (myOption.style.display === "none") {
+            myOption.style.display = "block";
+            myOption1.style.display = "none";
+        } else {
+            myOption.style.display = "none";
+        }
+    }
+} 
+});
+
+var atrasEnvio = document.getElementById("atrasEnvio");
+atrasEnvio.addEventListener("click", function(){
+    if (myOption.style.display === "block") {
+        myOption.style.display = "none";
+        myOption1.style.display = "block";
+        myOption2.style.display = "none";
+    } else {
+        myOption.style.display = "block";
+    }
 });
 
 var myButton2 = document.getElementById("btn-opcion2");
 var myOption2 = document.getElementById("myOption2");
+var direccion = document.getElementById("direccion");
+var ciudad = document.getElementById("ciudad");
+var estado = document.getElementById("estado");
+var codigo_postal = document.getElementById("codigo_postal");
 myButton2.addEventListener("click", function(){
-    if (myOption2.style.display === "none") {
-        myOption2.style.display = "block";
-    } else {
-        myOption2.style.display = "none";
+if (direccion.value === '') {
+
+}else{
+    if (ciudad.value === '') {
+        
+    }else{
+        if (estado.value === '' ) {
+
+        }else{
+            if (codigo_postal.value === '' ) {
+
+                }else{  
+                    if (myOption2.style.display === "none") {
+                        myOption2.style.display = "block";
+                    } else {
+                        myOption2.style.display = "none";
+                    }
+            }
+        }
     }
+    
+    
+    
+}
 });
+
 
 
 // function transfer (){

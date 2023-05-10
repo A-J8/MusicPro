@@ -7,7 +7,7 @@ urlpatterns = [
     path('', index, name="index"),
     path('producto/<int:id>', producto, name="producto"),
     path('carrito', carrito, name="carrito"),
-    path('pago', pago, name="pago"),
+    path('pago/<email>', pago, name="pago"),
     path('login', login, name="login"),
     path('registro', registro, name="registro"),
     path('administrador', administrador, name="administrador"),
@@ -27,9 +27,17 @@ urlpatterns = [
     path('limpiar/', limpiar_producto, name="cls"),
     path('comprar', comprar, name="comprar"),
 
+    #funciones contador
+    path('cambiarEstadoPago/<int:id>', cambiarEstadoPago, name="cambiarEstadoPago"),
+
+
+
 
     re_path(r'^media/(?P<path>.*)$', serve, {
         'document_root': settings.MEDIA_ROOT,
     })  
+
+    
+
 ]
 

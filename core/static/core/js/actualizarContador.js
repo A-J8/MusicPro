@@ -33,4 +33,7 @@ function cambiarEstado(boton) {
         estado.classList.add("true");
         estado.textContent = "Aprobado";
     }
+
+    
 }
+

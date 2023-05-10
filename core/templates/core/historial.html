@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}MusicPro{% endblock %}
 {% block head %}
-<link rel="stylesheet" href="{% static 'core/css/historial.css' %}">
+<link rel="stylesheet" href="{% static 'core/css/pago.css' %}">
 {% endblock %}  
 {% block content %}
 
@@ -11,20 +11,20 @@
     <thead>
         <tr>
             <th>Fecha</th>
-            <th>Producto</th>
-            <th>Precio unitario</th>
-            <th>Cantidad</th>
             <th>Total</th>
+            <th>Estado de pago</th>
+            <th>Estado de envío</th>
+            <th>Tipo de pago</th>
         </tr>
     </thead>
     <tbody>
-        {% for compra in Historial %}
+        {% for compra in compras %}
             <tr>
                 <td>{{ compra.fecha }}</td>
-                <td>{{ compra.producto.nombre }}</td>
-                <td>{{ compra.producto.precio }}</td>
-                <td>{{ compra.cantidad }}</td>
                 <td>{{ compra.total }}</td>
+                <td>{{ compra.estadoPago }}</td>
+                <td>{{ compra.estadoEnvio }}</td>
+                <td>{{ compra.get_tipoPago_display }}</td>
             </tr>
         {% empty %}
             <tr>
@@ -33,4 +33,4 @@
         {% endfor %}
     </tbody>
 </table>
-{% endblock %}  
+{% endblock %}
