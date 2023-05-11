@@ -57,6 +57,14 @@ class Historial(models.Model):
         (False, OPCION_2),
     ]
     tipoPago = models.BooleanField(choices=OPCIONES_TIPO_PAGO, default=False)
+    TIPO_1 = 'Logueado'
+    TIPO_2 = 'Invitado'
+    OPCIONES_TIPO_USUARIO = [
+        (True, TIPO_1),
+        (False, TIPO_2),
+    ]
+    tipoUsuario = models.BooleanField(choices=OPCIONES_TIPO_USUARIO, null=False,  default=False)
+    email = models.EmailField(null=False, default='')
 
 
 

@@ -7,7 +7,7 @@ urlpatterns = [
     path('', index, name="index"),
     path('producto/<int:id>', producto, name="producto"),
     path('carrito', carrito, name="carrito"),
-    path('pago/<email>', pago, name="pago"),
+    
     path('login', login, name="login"),
     path('registro', registro, name="registro"),
     path('administrador', administrador, name="administrador"),
@@ -18,7 +18,10 @@ urlpatterns = [
     path('comprar', comprar, name="comprar"),
     path('datoTransferencia', datoTransferencia, name="datoTransferencia"),
 
-    path('confirmarDatos/<nombre>',confirmarDatos, name="confirmarDatos"),
+    path('pago/<email>', pago, name="pago"),
+    path('confirmarDatos/<email>',confirmarDatos, name="confirmarDatos"),
+    
+    
     path('pagoInvitado1/',pagoInvitado1, name="pagoInvitado1"),
     path('datoInvitado/',datoInvitado, name="datoInvitado"),
 

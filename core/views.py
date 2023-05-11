@@ -1,9 +1,12 @@
+from datetime import datetime, date
 from django.shortcuts import render, redirect
 from .models import *
 from .Carrito import *
+from .context_processor import total_carrito
 from django.contrib import messages
 # from .forms import UserRegisterForm
 from django.shortcuts import render
+
 
 from .models import *
 # Create your views here.
@@ -78,6 +81,7 @@ def registro(request):
                 pwd = request.POST['password'],
                 tipo_usuario = False
             )
+            
             newUser.save()
             messages.success(request, 'Usuario registrado correctamente')
             return redirect('login')
@@ -138,38 +142,52 @@ def datoTransferencia(request):
 def cerrarSesion(request):
     del request.session['email']
     request.session.modified = True
-    messages.success(request, 'Sesion Cerrada')
+    if 'carrito' in request.session:
+        for key, value in request.session["carrito"].items():
+            carrito = Carrito(request)
+            carrito.limpiar()
     return render(request, 'core/index.html')
 
 
 #Guarda datos del usario elegido.
 
-def confirmarDatos(request):
-    apellido = request.POST['apellido'] 
-    user= request.session['email']
-    rut = request.POST['rut']
-    telefono = request.POST['telefono']
-
-    direccion = request.POST['direccion']
-    ciudad = request.POST['ciudad']
-    estado = request.POST['estado']
-    codigoPostal = request.POST['codigo_postal']
-
-    newPruebasEs = PruebasEs    (user = user, apellidoEs = apellido, rut = rut ,telefono = telefono, codigoPostal = codigoPostal, estado = estado , ciudad = ciudad , direccion = direccion)
-    
-    newUser = Usuario.objects.get(email = user)
-    newUser.rut = rut
-    newUser.estado = estado
-    newUser.codigoPostal = codigoPostal
-    newUser.direccion = direccion
-    print("funca")
-    newUser.save()
-    newPruebasEs.save()
-
-    for key, value in request.session["carrito"].items():
-        carrito = Carrito(request)
-        carrito.limpiar()
-    return redirect('index')
+def confirmarDatos(request, email):
+    if request.method == 'POST':
+        print("funca0")
+        newUser = Usuario.objects.get(email=email)
+        
+        newUser.rut = request.POST['rut'],
+        newUser.telefono = request.POST['telefono'],
+        newUser.direccion = request.POST['direccion'],
+        newUser.ciudad = request.POST['ciudad'],
+        newUser.estado = request.POST['estado'],
+        newUser.codigoPostal = request.POST['codigo_postal']         
+        
+        print("funca1")
+        newUser.save()
+        
+        total = 0
+        if 'carrito' in request.session:
+            for key, value in request.session["carrito"].items():
+                total += int(value["acumulado"])
+        
+        newHistorial = Historial(
+            email= request.POST['email'],
+            fecha = datetime.today(),
+            total = total,
+            tipoPago = True,
+            tipoUsuario = True,
+        )
+        newHistorial.save()
+        print("funca2")
+        
+        for key, value in request.session["carrito"].items():
+            carrito = Carrito(request)
+            carrito.limpiar()
+        return redirect('datoTransferencia')
+    else:
+        print("nofunca3")
+        return redirect('carrito')
 
 def datoInvitado(request):
     if request.method == 'POST':
@@ -185,13 +203,27 @@ def datoInvitado(request):
             codigoPostal = request.POST['codigo_postal']         
         )
         print("funca1")
-
         newUserinvitado.save()
+        
+        total = 0
+        if 'carrito' in request.session:
+            for key, value in request.session["carrito"].items():
+                total += int(value["acumulado"])
+        
+        newHistorial = Historial(
+            email= request.POST['email'],
+            fecha = datetime.today(),
+            total = total,
+            tipoPago = True,
+            tipoUsuario = False,
+        )
+        newHistorial.save()
         print("funca2")
+        
         for key, value in request.session["carrito"].items():
             carrito = Carrito(request)
             carrito.limpiar()
-        return redirect('index')
+        return redirect('datoTransferencia')
     else:
         print("nofunca3")
         return redirect('carrito')
