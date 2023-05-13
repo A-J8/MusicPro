@@ -18,6 +18,10 @@
     width: 80%;
     background-color: rgb(71, 126, 173);
 }
+#tabla{
+    width:auto;
+    padding: -100%;
+}
 #iconoInfo{
      color: black; 
 }

@@ -18,11 +18,25 @@
     width: 80%;
     background-color: rgb(71, 126, 173);
 }
+#tabla{
+    width:auto;
+    padding: -100%;
+}
 #iconoInfo{
      color: black; 
 }
-
-
 .container-fluid{
     height: auto;
+}
+
+#Nuevo_user{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+#btnRegistrarse{
+    display: flex;
+    justify-content: center;
+    margin-right: 25%;
+    
 }

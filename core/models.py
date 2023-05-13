@@ -30,7 +30,7 @@ class Usuario(models.Model):
     codigoPostal = models.IntegerField(max_length=50, default= 0)
     estado = models.CharField(max_length=50, default= '')
     ciudad = models.CharField(max_length=50, default= '')
-
+   
 
 
 class UsuarioInvitado(models.Model):

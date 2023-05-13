@@ -15,14 +15,14 @@
           <div class="position-sticky pt-3 sidebar-sticky">
             <ul class="nav flex-column" >
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page"  href="{% url 'administrador' %}">
+                <a class="nav-link active" aria-current="page" id="iconoInfo" href="{% url 'administrador' %}">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home align-text-bottom" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                   Inicio
                 </a>
               </li> 
               <li class="nav-item"> 
-                <a class="nav-link" href="{% url 'usuarioAdmin' %}">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users align-text-bottom" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <a class="nav-link" href="{% url 'usuarioAdmin' %}" id="iconoInfo" >
+                  <svg xmlns="http://www.w3.org/2000/svg" id="iconoInfo" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users align-text-bottom" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                   Usuarios
                 </a>
               </li>
@@ -55,26 +55,50 @@
         </nav>
 
         <div id="pantalla">
-          <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+          <main ><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand">
+            <div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-              <h1 class="h2">Ventas Mensuales</h1>
-              <div class="btn-toolbar mb-2 mb-md-0">
-                <div class="btn-group me-2">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-                </div>
-                <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar align-text-bottom" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                  This week
-                </button>
-              </div>
+              <h1 class="h2">Ventas Mensuales</h1> <button class="btn btn-info" onclick="generarinfo()">Generar reporte de pagos</button>   
             </div>
-      
-            <canvas class="my-4 w-100 chartjs-render-monitor" id="myChart" width="603" height="254" style="display: block; width: 603px; height: 254px;"></canvas>
+              <div class="ratio ratio-16x9">
+                <div class="tabla">
+                    <table class="table" id="tabla" style="color:rgb(0, 0, 0)">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Usuario</th>
+                                <th scope="col">Nombre Estacionamiento</th>
+                                <th scope="col">Hora de Inicio</th>
+                                <th scope="col">Fecha de Pago</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in pago %}
+                            <tr>
+                                <th scope="row">{{ i.id_pago }}</th>
+                                <td>{{ i.user }}</td>
+                                <td>{{ i.nombreEs }}</td>
+                                <td>{{ i.h_inicio }}</td>
+                                <td>{{ i.fecha_Pago }}</td>
+                                <td>{{ i.totalPago }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+              <script src="{% static 'core/js/reporte.js' %}"></script>
+          
           </main>
         </div>
         
+
+
       </div>
     </div>
   </div>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"> </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
 {% endblock %}

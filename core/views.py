@@ -92,8 +92,33 @@ def registro(request):
 def administrador(request):
     return render(request,'core/administrador.html'  ) 
 
-def usuarioAdmin(request):
-    return render(request,'core/usuariosAdmin.html'  ) 
+def usuarioAdmin(request): 
+    contexto = {'usuario': Usuario.objects.all()}
+    return render(request,'core/usuariosAdmin.html' , contexto ) 
+
+def crudUsuario(request):
+    if request.method == 'POST':
+        #estructura de condicion que verifica si el usuario que se intenta registrar existe
+        if Usuario.objects.filter(email = request.POST['email']).exists(): # se verifica la existencia por el campo de email
+            messages.success(request, 'El usuario ingresado ya existe')
+        else:
+            #creacion del nuevo usuario, entre [] se coloca el atributo "name" de los input en el html
+            newUser = Usuario(
+                nombre = request.POST['nombre'],
+                apellido = request.POST['apellido'],
+                email = request.POST['email'],
+                pwd = request.POST['password'],
+                tipo_usuario = False
+            )
+            
+            newUser.save()
+            messages.success(request, 'Usuario registrado correctamente')
+            return redirect('usuarioAdmin')
+    return render(request,'core/crudUsuarioad.html' )
+
+# def fromUsuario(request):
+    
+#     return render(request, 'core/.html')
 
 def repVentas(request):
     return render(request,'core/repVentas.html'  ) 
