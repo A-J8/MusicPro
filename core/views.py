@@ -87,8 +87,22 @@ def registro(request):
             return redirect('login')
     return render(request, 'core/registro.html')
 
+
+#funciones de administrador
 def administrador(request):
-    return render(request,'core/administrador.html'  )    
+    return render(request,'core/administrador.html'  ) 
+
+def usuarioAdmin(request):
+    return render(request,'core/usuariosAdmin.html'  ) 
+
+def repVentas(request):
+    return render(request,'core/repVentas.html'  ) 
+
+def repdesptienda(request):
+    return render(request,'core/repdesempeñotienda.html'  ) 
+
+def repestrVentas(request):
+    return render(request,'core/repestrategiaVentas.html'  ) 
 
 #funciones del carrito
 def agregar_producto(request, producto_id):

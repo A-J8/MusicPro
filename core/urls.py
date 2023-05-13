@@ -35,7 +35,11 @@ urlpatterns = [
     #funciones contador
     path('cambiarEstadoPago/<int:id>', cambiarEstadoPago, name="cambiarEstadoPago"),
 
-
+    #funciones de administrador
+    path('usuarioAdmin', usuarioAdmin, name="usuarioAdmin"),
+    path('repVentas', repVentas, name="repVentas"),
+    path('repdesptienda', repdesptienda, name="repdesptienda"),
+    path('repestrVentas', repestrVentas, name="repestrVentas"),
 
 
     re_path(r'^media/(?P<path>.*)$', serve, {

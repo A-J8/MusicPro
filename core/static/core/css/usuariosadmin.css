@@ -1,0 +1,26 @@
+#contenido{
+    display: flex;
+    justify-content: space-around;
+    width: 95%;
+    padding: 2%;
+    margin: 5% 0% 5% 0%;
+    background-color: rgb(255, 255, 255);
+    
+
+  }
+#sidebarMenu{
+    width: 20%;
+    height: 100%;
+    class:"col-md-3 col-lg-2 d-md-block bg-light sidebar ";
+    
+}
+#pantalla{
+    width: 80%;
+    background-color: rgb(71, 126, 173);
+}
+#iconoInfo{
+     color: black; 
+}
+.container-fluid{
+    height: auto;
+}
