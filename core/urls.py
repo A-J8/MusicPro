@@ -38,6 +38,8 @@ urlpatterns = [
     #funciones de administrador
     path('usuarioAdmin', usuarioAdmin, name="usuarioAdmin"),
     path('crudUsuario', crudUsuario, name="crudUsuario"),
+    # path('eliminarUsuario/<email>', eliminarUsuario, name='eliminarUsuario'),
+    path('eliminarUsuario/<email>', eliminarUsuario, name='eliminarUsuario'),
     # path('fromUsuario', fromUsuario, name="fromUsuario"),
     path('repVentas', repVentas, name="repVentas"),
     path('repdesptienda', repdesptienda, name="repdesptienda"),

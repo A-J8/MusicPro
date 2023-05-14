@@ -116,6 +116,14 @@ def crudUsuario(request):
             return redirect('usuarioAdmin')
     return render(request,'core/crudUsuarioad.html' )
 
+ #elimina al usario por el id (funcion de admin).
+def eliminarUsuario(request, email):
+    
+        usuario = Usuario.objects.get(email=email)
+        usuario.delete()
+        return redirect('usuarioAdmin')
+    # return render ( request,'core/usuariosAdmin.html' )
+
 # def fromUsuario(request):
     
 #     return render(request, 'core/.html')

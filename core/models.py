@@ -19,6 +19,7 @@ class Producto(models.Model):
 
 # Create models Usuario.
 class Usuario(models.Model):
+    cam_auto = models.IntegerField(default=0)
     nombre = models.CharField(max_length=16, )
     apellido = models.CharField( max_length=16, null=False)
     email = models.EmailField(primary_key=True, unique=True)
@@ -30,6 +31,11 @@ class Usuario(models.Model):
     codigoPostal = models.IntegerField(max_length=50, default= 0)
     estado = models.CharField(max_length=50, default= '')
     ciudad = models.CharField(max_length=50, default= '')
+    def save(self, *args, **kwargs):
+        if not self.cam_auto:
+            last_object = Usuario.objects.order_by('-cam_auto').first()
+            self.cam_auto = 1 if not last_object else last_object.cam_auto + 1
+        super().save(*args, **kwargs)
    
 
 
