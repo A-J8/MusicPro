@@ -129,7 +129,9 @@ def eliminarUsuario(request, email):
 #     return render(request, 'core/.html')
 
 def repVentas(request):
-    return render(request,'core/repVentas.html'  ) 
+   
+    contexto = {'historial': Historial.objects.all()}
+    return render(request, 'core/repVentas.html' ,contexto)
 
 def repdesptienda(request):
     return render(request,'core/repdesempeñotienda.html'  ) 

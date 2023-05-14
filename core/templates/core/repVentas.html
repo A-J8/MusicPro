@@ -5,6 +5,8 @@
 
 {% block head %}
 <link href="{% static 'core/css/repventas.css' %}" rel="stylesheet" type="text/css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"> </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -66,22 +68,22 @@
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
-                                <th scope="col">Usuario</th>
-                                <th scope="col">Nombre Estacionamiento</th>
-                                <th scope="col">Hora de Inicio</th>
+                                <th scope="col">tipo de usario Usuario</th>
+                                <th scope="col">Estado del Envio</th>
+                                <th scope="col">Estado del Pago</th>
                                 <th scope="col">Fecha de Pago</th>
                                 <th scope="col">Total</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for i in pago %}
+                            {% for i in historial %}
                             <tr>
-                                <th scope="row">{{ i.id_pago }}</th>
-                                <td>{{ i.user }}</td>
-                                <td>{{ i.nombreEs }}</td>
-                                <td>{{ i.h_inicio }}</td>
-                                <td>{{ i.fecha_Pago }}</td>
-                                <td>{{ i.totalPago }}</td>
+                                <th scope="row">{{ i.email }}</th>
+                                <td>{{ i.tipoUsuario }}</td>
+                                <td>{{ i.estadoEnvio }}</td>
+                                <td>{{ i.estadoPago }}</td>
+                                <td>{{ i.fecha }}</td>
+                                <td>{{ i.total }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -89,7 +91,7 @@
                     
                 </div>
             </div>
-              <script src="{% static 'core/js/reporte.js' %}"></script>
+              
           
           </main>
         </div>
@@ -99,6 +101,5 @@
       </div>
     </div>
   </div>
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"> </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+  <script src="{% static 'core/js/reportes.js' %}" ></script>
 {% endblock %}
