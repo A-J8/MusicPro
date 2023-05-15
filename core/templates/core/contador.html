@@ -59,8 +59,13 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <H1>Menu Contador</H1>
-      <h2>Bienvenido {{request.user.email}}</h2>
       
+      
+      <!--INICIO-->
+      <div id="inicio" style="display: block; margin-top: 2%;">
+        <h2>Bienvenido {{request.session.nombre}}</h2>
+        <h6>Porfavor para realizar alguna funcion de contador seleccione la que desea realizar en la barra lateral izquierda</h6>
+      </div>
 
       <!--TABLA DE PAGOS-->
       <div id="tblPagos" style="display: none;">

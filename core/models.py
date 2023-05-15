@@ -24,7 +24,7 @@ class Usuario(models.Model):
     apellido = models.CharField( max_length=16, null=False)
     email = models.EmailField(primary_key=True, unique=True)
     pwd = models.CharField(null=False, max_length=12)
-    tipo_usuario = models.BooleanField( max_length=16, default=False)
+    tipoUsuario = models.IntegerField()                        
     rut = models.CharField(max_length=10, default= '')
     direccion = models.CharField(max_length=50, null=False, default= '')
     telefono = models.CharField(max_length=10, default=0)

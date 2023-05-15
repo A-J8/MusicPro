@@ -2,6 +2,7 @@
     if (tblPagos.style.display === "none") {
         tblPagos.style.display = "block";
         tblEnvios.style.display = "none";
+        inicio.style.display = "none";
     } else {
         tblPagos.style.display = "none";
     }
@@ -11,6 +12,7 @@
     if (tblEnvios.style.display === "none") {
         tblEnvios.style.display = "block";
         tblPagos.style.display = "none";
+        inicio.style.display = "none";
     } else {
         tblEnvios.style.display = "none";
     }
@@ -19,6 +21,7 @@
     btnInicio.addEventListener("click", function(){
     tblPagos.style.display = "none";
     tblEnvios.style.display = "none";
+    inicio.style.display = "block";
     
     });
 

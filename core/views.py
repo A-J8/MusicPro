@@ -59,7 +59,18 @@ def login(request):
         try:
             newUser = Usuario.objects.get(email = request.POST['email'], pwd = request.POST['password'])
             request.session['email'] = newUser.email
-            return redirect('index')
+            request.session['nombre'] = newUser.nombre
+            request.session['tipoUsuario'] = newUser.tipoUsuario
+            if newUser.tipoUsuario == 1:
+                return redirect('administrador')
+            elif newUser.tipoUsuario == 2:
+                return redirect('contador')
+            elif newUser.tipoUsuario == 3:
+                return redirect('index')
+            elif newUser.tipoUsuario == 4:
+                return redirect('bodeguero')           
+            else:
+                return redirect('index')
         except Usuario.DoesNotExist as e: 
             messages.success(request, 'Correo o constraseña no son correctos')
     return render(request, 'core/login.html')
