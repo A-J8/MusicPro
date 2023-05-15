@@ -79,9 +79,16 @@
                             {% for i in historial %}
                             <tr>
                                 <th scope="row">{{ i.email }}</th>
-                                <td>{{ i.tipoUsuario }}</td>
+                                <td>{{ i.id }}</td>
+                                <td>{% if i.tipoUsuario %}  Logueado
+                                  {% else %} Invitado
+                                  {% endif %}
+                                </td>
                                 <td>{{ i.estadoEnvio }}</td>
-                                <td>{{ i.estadoPago }}</td>
+                                <td>{% if i.estadoPago %} Aprobado
+                                  {% else %}Rechazado
+                                  {% endif %}
+                                </td>
                                 <td>{{ i.fecha }}</td>
                                 <td>{{ i.total }}</td>
                             </tr>

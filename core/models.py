@@ -72,7 +72,10 @@ class Historial(models.Model):
     tipoUsuario = models.BooleanField(choices=OPCIONES_TIPO_USUARIO, null=False,  default=False)
     email = models.EmailField(null=False, default='')
 
-
+class DetalleCompra(models.Model):
+    idHistorial = models.IntegerField()
+    idProducto = models.IntegerField()
+    cantidad = models.IntegerField()
 
 
 # #ejemplo en prueba
@@ -86,5 +89,8 @@ class PruebasEs(models.Model):
     estado = models.CharField(max_length=50)
     ciudad = models.CharField(max_length=50)
     direccion = models.CharField(max_length=50)
+
+
+
 
 

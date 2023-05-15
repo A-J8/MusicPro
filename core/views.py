@@ -267,7 +267,7 @@ def datoInvitado(request):
         )
         newHistorial.save()
         print("funca2")
-        
+
         for key, value in request.session["carrito"].items():
             carrito = Carrito(request)
             carrito.limpiar()
@@ -304,3 +304,17 @@ def cambiarEstadoPago(request, id):
         historial.save()
     return render(request, 'core/contador.html', contexto)
 
+def cambiarEstadoEnvio(request, id):
+    contexto = {'historial' : Historial.objects.all()}
+    historial = Historial.objects.get(id=id)
+    if historial.estadoEnvio == True:
+        historial.estadoEnvio = False  # cambia el estado a lo opuesto
+        historial.save()
+    else:
+        historial.estadoEnvio = True
+        historial.save()
+    return render(request, 'core/contador.html', contexto)
+
+#funciones bodeguero
+def bodeguero(request):
+    return render(request,'core/bodeguero.html' ) 

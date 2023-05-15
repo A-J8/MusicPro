@@ -6,6 +6,14 @@
 {% block head %}
 <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
 <link href="{% static 'core/css/repdesempeñotienda.css' %}" rel="stylesheet" type="text/css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"> </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -59,44 +67,25 @@
           <main ><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand">
             <div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-              <h1 class="h2">Desempeño de la tienda</h1> <button class="btn btn-info" onclick="generarinfo()">Generar reporte de pagos</button>   
+              <h1 class="h2">Desempeño de la tienda</h1> <button class="btn btn-info" onclick="downloadPDF()">Generar reporte de pagos</button>
             </div>
-              <div class="ratio ratio-16x9">
-                <div class="tabla">
-                    <table class="table" id="tabla" style="color:rgb(0, 0, 0)">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Usuario</th>
-                                <th scope="col">Nombre Estacionamiento</th>
-                                <th scope="col">Hora de Inicio</th>
-                                <th scope="col">Fecha de Pago</th>
-                                <th scope="col">Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for i in pago %}
-                            <tr>
-                                <th scope="row">{{ i.id_pago }}</th>
-                                <td>{{ i.user }}</td>
-                                <td>{{ i.nombreEs }}</td>
-                                <td>{{ i.h_inicio }}</td>
-                                <td>{{ i.fecha_Pago }}</td>
-                                <td>{{ i.totalPago }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    
-                </div>
-            </div>
-              <script src="{% static 'core/js/reporte.js' %}"></script>
-          
+              <div class="ratio ratio-16x9" >
+                <figure class="highcharts-figure">
+                  <div id="container"></div>
+                  <p class="highcharts-description">
+                      A basic column chart comparing emissions by pollutant.
+                      Oil and gas extraction has the overall highest amount of
+                      emissions, followed by manufacturing industries and mining.
+                      The chart is making use of the axis crosshair feature, to highlight
+                      years as they are hovered over.
+                  </p>
+              </figure>
           </main>
         </div>
         
       </div>
     </div>
   </div>
-        
+  <script src="{% static 'core/js/grafico.js' %}" ></script>
+  <script src="{% static 'core/js/reportes.js' %}" ></script>
 {% endblock %}

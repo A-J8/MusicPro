@@ -34,6 +34,10 @@ urlpatterns = [
 
     #funciones contador
     path('cambiarEstadoPago/<int:id>', cambiarEstadoPago, name="cambiarEstadoPago"),
+    path('cambiarEstadoEnvio/<int:id>', cambiarEstadoEnvio, name="cambiarEstadoEnvio"),
+
+    #funciones bodeguero
+    path('bodeguero', bodeguero, name="bodeguero"),
 
     #funciones de administrador
     path('usuarioAdmin', usuarioAdmin, name="usuarioAdmin"),

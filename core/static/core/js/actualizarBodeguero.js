@@ -1,4 +1,4 @@
-    btnPagos.addEventListener("click", function(){
+btnPagos.addEventListener("click", function(){
     if (tblPagos.style.display === "none") {
         tblPagos.style.display = "block";
         tblEnvios.style.display = "none";
@@ -21,5 +21,3 @@
     tblEnvios.style.display = "none";
     
     });
-
-

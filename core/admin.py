@@ -7,5 +7,6 @@ from core.models import *
 admin.site.register(Producto)
 admin.site.register(Usuario)
 admin.site.register(Historial)
+admin.site.register(DetalleCompra)
 admin.site.register(PruebasEs)
 admin.site.register(UsuarioInvitado)
