@@ -221,8 +221,6 @@ def confirmarDatos(request, email):
         newUser.ciudad = request.POST['ciudad'],
         newUser.estado = request.POST['estado'],
         newUser.codigoPostal = request.POST['codigo_postal']         
-        
-        print("funca1")
         newUser.save()
         
         total = 0
@@ -231,15 +229,23 @@ def confirmarDatos(request, email):
                 total += int(value["acumulado"])
         
         newHistorial = Historial(
-            email= request.POST['email'],
+            email = request.POST['email'],
             fecha = datetime.today(),
             total = total,
             tipoPago = True,
             tipoUsuario = True,
         )
         newHistorial.save()
-        print("funca2")
-        
+
+        for key, value in request.session["carrito"].items():
+            carrito = Carrito(request)
+            newDetalle = DetalleCompra(
+                idHistorial = newHistorial.id,
+                idProducto = value["producto_id"],
+                cantidad = value["cantidad"]
+            )
+            newDetalle.save()
+
         for key, value in request.session["carrito"].items():
             carrito = Carrito(request)
             carrito.limpiar()
@@ -277,7 +283,15 @@ def datoInvitado(request):
             tipoUsuario = False,
         )
         newHistorial.save()
-        print("funca2")
+        
+        for key, value in request.session["carrito"].items():
+            carrito = Carrito(request)
+            newDetalle = DetalleCompra(
+                idHistorial = newHistorial.id,
+                idProducto = value["producto_id"],
+                cantidad = value["cantidad"]
+            )
+            newDetalle.save()
 
         for key, value in request.session["carrito"].items():
             carrito = Carrito(request)
