@@ -24,6 +24,9 @@
     border-style: outset;
     box-shadow: 5px 5px 50px 5px rgb(44, 44, 44);
   }">
+   {% if alert_js %}
+   {{ alert_js|safe }}
+  {% endif %}
     <div id="datosTransferencia">
         <h5>Datos de Transferencia</h5>
         <p>Banco: Santander</p>

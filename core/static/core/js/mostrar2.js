@@ -64,8 +64,6 @@ if (direccion.value === '') {
 }
 });
 
-
-
 // function transfer (){
 //     var valorActivo = document.querySelector('input[name="MetodPago"]:checked').value;
 //     var datos = document.getElementById("datosTransferencia");

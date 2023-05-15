@@ -26,19 +26,7 @@
                                 <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
                                 <polyline points="13 2 13 9 20 9"></polyline>
                             </svg>
-                            Ordenes de pagos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" id="btnEnvios" style="color: black;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                class="feather feather-shopping-cart align-text-bottom" aria-hidden="true">
-                                <circle cx="9" cy="21" r="1"></circle>
-                                <circle cx="20" cy="21" r="1"></circle>
-                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                            </svg>
-                            Entregas
+                            Ordenes de Compra
                         </a>
                     </li>
                 </ul>
@@ -48,11 +36,16 @@
 
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <H1>Menu Contador</H1>
+            <H1>Menu Bodeguero</H1>
 
+            <div id="inicio" style="display: block; margin-top: 2%;">
+                <h4>Bienvenido {{request.session.nombre}}</h4>
+                <p> Verifique el stock en el inventario para poder aceptar o rechazar el pedido.</p>
+            </div>
+            <br><br>
             <!--TABLA DE PAGOS-->
+            <h4>Ordenes de Compra</h4>
             <div id="tblPagos" style="display: block;">
-                <h2>Pagos</h2>
                 <div class="table-responsive">
                     <table class="table table-striped table-sm">
                         <thead>
@@ -68,7 +61,6 @@
                         <tbody>
 
                             {% for i in historial %}
-
                             <tr>
                                 <td>{{i.id}}</td>
                                 <td>{{i.fecha|date:"d/m/Y"}}</td>
@@ -85,11 +77,8 @@
                                     Rechazado
                                     {% endif %}
                                 </td>
-
-
-                                <td> <a href="{% url 'cambiarEstadoPago' i.id %}" class="btn btn-secondary">Cambiar</a>
-                                </td>
-                                {% endfor %}
+                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>

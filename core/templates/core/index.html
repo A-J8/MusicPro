@@ -2,6 +2,14 @@
 {% load static %}
 {% block title %}MusicPro{% endblock %}
 {% block head %}
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Last-Modified" content="0">
+<meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+<meta http-equiv="Pragma" content="no-cache">
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="{% static 'core/css/index.css' %}">
 {% endblock %}
 {% block content %}
@@ -46,7 +54,7 @@
               <p>precio: {{i.precio}}</p>
               <p>stock: {{i.stock}}</p>
               <a href="{% url 'producto' i.id %}" class="btn btn-secondary">Mirar producto</a>
-              <a href="{% url 'Add' i.id %}" class="btn btn-secondary">Agregar al carrito</a>  
+              <a href="{% url 'Add' i.id %}" class="btn btn-secondary"> Agregar al carrito</a>  
             </div>
         </div>
     {% endfor %}

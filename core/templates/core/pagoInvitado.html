@@ -10,92 +10,108 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="{% static 'core/css/pago.css' %}">
+<link rel="stylesheet" href="{% static 'core/css/StylePago.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 {% endblock %}
 {% block content %}
 
-<div id="contenido">
-    <div style="width: 40%;">
-        <table class="table">
-            <thead>
-                <tr id="columnas">
-                    <th scope="col">Producto</th>
-                </tr>
-            </thead>
-            {% if request.session.carrito.items %}
-            {% for key,value in request.session.carrito.items %}
-            <tbody>
-                <tr>
-                    <th id="producto">
-                        <div class="tituloProducto">
-                            <h2>{{value.nombre}}</h2>
-                        </div>
-                    </th>
-                </tr>
-            </tbody>
-        </table>
-        {% endfor %}
-        {% endif %}
-        <div class="precio">
 
-            <div class="monto">
-                <br>
-                <h2>Total</h2>
-                <div id="total">
-                    <td colspan="3">${{total_carrito}} CLP</td>
+
+<div id="contenido">
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+        </symbol>
+    </svg>
+    <div class="alert alert-primary d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+        <div>
+            ¿Ya eres cliente? <a href="{% url 'login' %}" class="showlogin">Haz clic aquí para acceder</a>
+        </div>
+      </div>
+    <div id="venta">
+        <div  style="width: 40%;">
+            <table class="table">
+                <thead>
+                    <tr id="columnas">
+                        <th scope="col">Producto</th>
+                    </tr>
+                </thead>
+                {% if request.session.carrito.items %}
+                {% for key,value in request.session.carrito.items %}
+                <tbody>
+                    <tr>
+                        <th id="producto">
+                            <div class="tituloProducto">
+                                <h2>{{value.nombre}}</h2>
+                            </div>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            {% endfor %}
+            {% endif %}
+            <div class="precio">
+    
+                <div class="monto">
+                    <br>
+                    <h2>Total</h2>
+                    <div id="total">
+                        <td colspan="3">${{total_carrito}} CLP</td>
+                    </div>
                 </div>
             </div>
         </div>
+        <form id="DatosCliente" action="/datoInvitado/" method="post">
+            <h2>1. Información de Pago</h2>
+            {% csrf_token %}
+            <div id="Formcliente" style="display: block;">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required> </input>
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" name="apellido" required=""><br><br>
+                <label for="email">Correo Electronico:</label>
+                <input type="email" id="email" name="email" required="">
+                <label for="rut">Rut:</label>
+                <input type="text" id="rut" name="rut" required="" maxlength="10" required><br><br>
+                <label for="telefono">Telefono:</label>
+                <input type="text" id="telefono" name="telefono" required="" maxlength="12"><br><br>
+                <button type="submit" id="btn-opcion" class="btn btn-dark">Continuar</button>
+                <br><br>
+            </div>
+    
+    
+            <h2>2. Envio</h2>
+            <div id="myOption" style="display: none;">
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" required="">
+                <label for="ciudad">Ciudad:</label>
+                <input type="text" id="ciudad" name="ciudad" required=""><br><br>
+                <label for="estado">Estado:</label>
+                <input type="text" id="estado" name="estado" required="">
+                <label for="codigo_postal">Código Postal:</label>
+                <input type="text" id="codigo_postal" name="codigo_postal" required=""><br><br>
+    
+                <a id="atrasEnvio" class="btn btn-dark">Atrás</a>
+    
+                <a id="btn-opcion2" class="btn btn-dark">Continuar</a>
+                <br><br>
+            </div>
+            <h2>3. Pago</h2>
+            <div id="myOption2" style="display: none;">
+                <button class="btn btn-dark">Webpay</button><img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIYZgSlplNsbihDH6JYCj5jtAdaZ-ATKXS9h_6wEJ8okjdZ5Wf5tfMZLjMHIuMQNMFPWY&usqp=CAU"
+                    alt=""> <br><br>
+                <button type="submit" class="btn btn-dark">Transferencia</button>
+            </div>
+    
+    
+    
+    
+        </form>
     </div>
-    <form id="DatosCliente" action="/datoInvitado/" method="post">
-        <h2>1. Información de Pago</h2>
-        {% csrf_token %}
-        <div id="Formcliente"  style="display: block;">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre"  required> </input>
-            <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" name="apellido" required="" 
-            ><br><br>
-            <label for="email">Correo Electronico:</label>
-            <input type="email" id="email" name="email" required=""  >
-            <label for="rut">Rut:</label>
-            <input type="text" id="rut" name="rut" required=""  maxlength="10" required ><br><br>
-            <label for="telefono">Telefono:</label>
-            <input type="text" id="telefono" name="telefono" required="" maxlength="12"
-                ><br><br>
-                PruebasEs
-            <button type="submit" id="btn-opcion" class="btn btn-dark">Continuar</button>
-            <br><br>
-        </div>
-
-        
-        <h2>2. Envio</h2>
-        <div id="myOption" style="display: none;">
-            <label for="direccion">Dirección:</label>
-            <input type="text" id="direccion" name="direccion" required="">
-            <label for="ciudad">Ciudad:</label>
-            <input type="text" id="ciudad" name="ciudad" required="" ><br><br>
-            <label for="estado">Estado:</label>
-            <input type="text" id="estado" name="estado" required=""  >
-            <label for="codigo_postal">Código Postal:</label>
-            <input type="text" id="codigo_postal" name="codigo_postal" required=""><br><br>
-                
-            <a id="atrasEnvio" class="btn btn-dark">Atrás</a>
-
-            <a id="btn-opcion2" class="btn btn-dark">Continuar</a>
-            <br><br>
-        </div>
-        <h2>3. Pago</h2>
-        <div id="myOption2" style="display: none;">
-            <button class="btn btn-dark">Webpay</button><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIYZgSlplNsbihDH6JYCj5jtAdaZ-ATKXS9h_6wEJ8okjdZ5Wf5tfMZLjMHIuMQNMFPWY&usqp=CAU" alt=""> <br><br>
-            <button type="submit" class="btn btn-dark">Transferencia</button>
-        </div>
-
-
-
-
-    </form>
-    <script src="{% static 'core/js/enviar_correo.js' %}"></script>
+   
+    <script src="{% static 'core/js/alerta.js' %}"></script>
     <script src="{% static 'core/js/mostrar2.js' %}"></script>
 </div>
 {% endblock %}
