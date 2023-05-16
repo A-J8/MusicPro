@@ -6,14 +6,25 @@ from .context_processor import total_carrito
 from django.contrib import messages
 # from .forms import UserRegisterForm
 from django.shortcuts import render
-
-
 from .models import *
 # Create your views here.
 
 def index(request):
-    contexto = {'productos' : Producto.objects.all()}
+    contexto = {
+        'productos' : Producto.objects.all(),
+        'tipoProducto' : TipoProducto.objects.all()
+        }
     return render(request,'core/index.html', contexto)
+
+def filtrar(request, id):
+    productos = Producto.objects.filter(idTipoProducto=id)
+    tipoProductos = TipoProducto.objects.all()
+
+    contexto = {
+        'productos': productos,
+        'tipoProducto': tipoProductos
+    }
+    return render(request, 'core/index.html', contexto)
 
 def producto(request, id):
     producto = Producto.objects.get(id=id)
@@ -37,24 +48,40 @@ def pago(request, email):
 def pagoInvitado1(request):
     return render(request,'core/pagoInvitado.html' )
 
+def perfil(request):
+    return render(request,'core/perfil.html' )
+
 def micuenta(request):
     return render(request,'core/micuenta.html'  )
-
-def historial(request):
-    return render(request,'core/historial.html'  )
 
 def contador(request):
     contexto = {'historial' : Historial.objects.all()}
     return render(request, 'core/contador.html', contexto)
 
 def historial(request):
-    compras = Historial.objects.all().order_by('-fecha')
-    return render(request, 'core/historial.html', {'compras': compras})
+    contexto = {
+        'compras' : Historial.objects.filter(email = request.session['email']).order_by('-fecha'),
+        'detalle' : DetalleCompra.objects.all(),
+        'producto' : Producto.objects.all()
+    }
+    return render(request, 'core/historial.html', contexto)
+
+def vendedor(request):
+    contexto = {
+        'compras' : Historial.objects.all().order_by('-fecha'),
+        'detalle' : DetalleCompra.objects.all(),
+        'producto' : Producto.objects.all()
+        }
+    
+    return render(request, 'core/vendedor.html', contexto)
+
 
 
 
 #inicio de sesion del usuario registrado
 def login(request):
+    # Ejemplo de definición de variable
+    usuarioNotFound = True
     if request.method == 'POST':
         try:
             newUser = Usuario.objects.get(email = request.POST['email'], pwd = request.POST['password'])
@@ -70,11 +97,16 @@ def login(request):
             elif newUser.tipoUsuario == 4:
                 return redirect('bodeguero')           
             else:
+                messages.success(request, 'Operación exitosa')
                 return redirect('index')
         except Usuario.DoesNotExist as e: 
             messages.success(request, 'Correo o constraseña no son correctos')
-    return render(request, 'core/login.html')
-    
+            messages.error(request, 'Ocurrió un error')
+            usuarioNotFound = False
+    return render(request, 'core/login.html', {'usuarioNotFound' : usuarioNotFound})
+
+
+
 
 
 #registra y valida un nuevo usuario
@@ -343,3 +375,38 @@ def cambiarEstadoEnvio(request, id):
 #funciones bodeguero
 def bodeguero(request):
     return render(request,'core/bodeguero.html' ) 
+
+def perfil(request):
+    usuario = Usuario.objects.filter(email = request.session['email'])
+    return render(request, 'core/perfil.html', {'usuario':usuario})
+
+def actualizarPerfil(request, email):
+    usuario = Usuario.objects.get(email = email)
+    return render(request, 'core/micuenta.html', {'usuario':usuario})
+
+def editar_perfil(request, email):
+        
+        nombre = request.POST['nombre']
+        apellido = request.POST['apellido']
+        password = request.POST['password']
+        
+      
+        oldemail = Usuario.objects.get(email = request.session['email']) 
+        oldemail.nombre = nombre
+        oldemail.apellido = apellido
+        oldemail.pwd = password
+        oldemail.save()
+        print("Usuario invitado actualizado con éxito.")
+        return redirect('perfil')
+    
+# def editarPerfil(request):
+#     nombre = request.POST['nombre']
+#     apellido = request.POST['apellido']
+
+#     oldemail = Usuario.objects.get(email = request.session['email'])  
+#     oldemail.nombre = nombre
+#     oldemail.apellido = apellido
+#     oldemail.save()
+#     messages.success(request, 'Usuario: ' + nombre +' Actualizado correctamente!')
+#     return redirect('perfil')
+

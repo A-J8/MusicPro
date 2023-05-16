@@ -5,6 +5,8 @@ from django.views.static import serve
 
 urlpatterns = [
     path('', index, name="index"),
+    path('filtrar/<int:id>', filtrar, name="filtrar"),
+
     path('producto/<int:id>', producto, name="producto"),
     path('carrito', carrito, name="carrito"),
     
@@ -17,6 +19,13 @@ urlpatterns = [
     path('contador', contador, name="contador"),
     path('comprar', comprar, name="comprar"),
     path('datoTransferencia', datoTransferencia, name="datoTransferencia"),
+    path('vendedor/',vendedor, name="vendedor"),
+
+    #funcion perfil
+    
+    path('perfil/',perfil, name="perfil"),
+    path('editar_perfil/<email>', editar_perfil, name="editar_perfil"),
+    path('actualizarPerfil/<email>', actualizarPerfil, name='actualizarPerfil'),
 
     path('pago/<email>', pago, name="pago"),
     path('confirmarDatos/<email>',confirmarDatos, name="confirmarDatos"),

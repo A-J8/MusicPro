@@ -8,22 +8,28 @@
 
 
 <div id="cuadro">
-    <a href="{% url 'index' %}"  class="btn btn-secondary">Volver</a>
+    <a href="{% url 'index' %}" class="btn btn-secondary">Volver</a>
     <h1 style="display: flex; justify-content: center;">{{producto.nombre}}</h1>
     <div style="display: flex;">
         <div id="imagenProducto">
-            <img id="#" src="/{{producto.imagen}}"> 
+            <img id="#" src="/{{producto.imagen}}">
         </div>
         <div id="datosProducto">
             <div style="margin: 1%;">
-            <h3>Descripcion</h3> 
-            <p>{{producto.descripcion}}</p>
-            <p>Stock: {{producto.stock}}</p>
+                <h3>Descripcion</h3>
+                <p>{{producto.descripcion}}</p>
+                <p>Stock: {{producto.stock}}</p>
             </div>
             <div style="margin: 1%;">
-            <h4>Precio: ${{producto.precio}}</h4>
-            <a href="{% url 'Add' producto.id %}" class="btn btn-secondary">Agregar al carrito</a>  
-            </div>    
+                <h4>Precio: ${{producto.precio}}</h4>
+                {% if i.stock > 0 %}
+                <a href="{% url 'Add' i.id %}" class="btn btn-secondary"> <img
+                        src="{% static 'core/img/iconcarrito.png' %}" alt="" style="width: 20px;"> Agregar al
+                    carrito</a>
+                {% else %}
+                <a href="#" class="btn btn-danger" style="pointer-events: none;"> Sin Stock</a>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>

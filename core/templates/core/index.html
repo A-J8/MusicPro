@@ -18,47 +18,71 @@
 
 <!--CARRUCEL-->
 <div id="carouselExampleFade" class="carousel slide carousel-fade" style="width: 100%;">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="{% static 'core/img/carrucelAnuncio1.png' %}" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="{% static 'core/img/carrucelRockeros.png' %}" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="{% static 'core/img/carrucelGuitarras.png' %}" class="d-block w-100" alt="...">
-      </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'core/img/carrucelAnuncio1.png' %}" class="d-block w-100" alt="...">
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
+    <div class="carousel-item">
+      <img src="{% static 'core/img/carrucelRockeros.png' %}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'core/img/carrucelGuitarras.png' %}" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
 
 <!--MARKETPLACE PRODUCTOS-->
 <div class="cuadroProductos">
-    <h1 style="display: flex; justify-content: center; font-size: 500%;">Productos</h1>
-    <div class="row row-cols-3">
-    {% for i in productos %}
-        <div class="col-sm-4 mb-4">
-            <div class="producto">
-              
-              <img  id="imgPro" src="/{{i.imagen}}" class="figure-img img-fluid">
-              
-              <input type="hidden" id="id" name="id" value="{{i.id}}"> 
-              <h4>{{i.nombre}}</h4>
-              <p>precio: {{i.precio}}</p>
-              <p>stock: {{i.stock}}</p>
-              <a href="{% url 'producto' i.id %}" class="btn btn-secondary">Mirar producto</a>
-              <a href="{% url 'Add' i.id %}" class="btn btn-secondary"> Agregar al carrito</a>  
-            </div>
-        </div>
-    {% endfor %}
+  <h1 style="display: flex; justify-content: center; font-size: 500%;">Productos</h1>
+
+  <button id="botonFiltro" class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+    aria-controls="offcanvasScrolling">Filtrar</button>
+
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+    id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Seleccione el tipo de producto que desea filtrar</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
+    <div class="offcanvas-body">
+      <div id="labelFiltro"> <a href="{% url 'index'  %}">Quitar Filtros</a> </div>
+      <hr class="filtro-linea">
+      {% for i in tipoProducto %}
+        <div id="labelFiltro"> <a href="{% url 'filtrar' i.id %}">{{i.nombre}}</a> </div>
+      {% endfor %}
+    </div>
+  </div>
+  
+  <div class="row row-cols-3">
+    {% for i in productos %}
+    <div class="col-sm-4 mb-4">
+      <div class="producto">
+
+        <img id="imgPro" src="/{{i.imagen}}" class="figure-img img-fluid">
+
+        <input type="hidden" id="id" name="id" value="{{i.id}}">
+        <h4>{{i.nombre}}</h4>
+        <p>precio: {{i.precio}}</p>
+        <p>stock: {{i.stock}}</p>
+        <a href="{% url 'producto' i.id %}" class="btn btn-secondary">Mirar producto</a>
+        {% if i.stock > 0 %}
+          <a href="{% url 'Add' i.id %}" class="btn btn-secondary"> <img src="{% static 'core/img/iconcarrito.png' %}"
+              alt="" style="width: 20px;"> Agregar al carrito</a>
+        {% else %}
+        <a href="#" class="btn btn-danger" style="pointer-events: none;"> Sin Stock</a>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
 </div>
 
 {% endblock %}

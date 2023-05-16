@@ -3,33 +3,58 @@
 {% block title %}MusicPro{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{% static 'core/css/pago.css' %}">
-{% endblock %}  
+{% endblock %}
 {% block content %}
 
 <h1>Historial de compras</h1>
 <table class="table table-striped">
     <thead>
+        <h1>Pedidos</h1>
         <tr>
+            <th>ID Compra</th>
             <th>Fecha</th>
+            <th>Productos</th>
             <th>Total</th>
-            <th>Estado de pago</th>
-            <th>Estado de envío</th>
             <th>Tipo de pago</th>
+            <th>Estado envio</th>
         </tr>
     </thead>
     <tbody>
         {% for compra in compras %}
-            <tr>
-                <td>{{ compra.fecha }}</td>
-                <td>{{ compra.total }}</td>
-                <td>{{ compra.estadoPago }}</td>
-                <td>{{ compra.estadoEnvio }}</td>
-                <td>{{ compra.get_tipoPago_display }}</td>
-            </tr>
+        <tr>
+            <td>{{ compra.id }}</td>
+            <td>{{ compra.fecha }}</td>
+            <td>
+                {% for d in detalle %}
+                {% if compra.id == d.idHistorial %}
+                {% for p in producto %}
+                {% if d.idProducto == p.id %}
+                {{ p.nombre }},
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+            </td>
+            <td>{{ compra.total }}</td>
+
+            <td>{% if compra.estadoPago %}
+                Aprobado
+                {% else %}
+                Procesando
+                {% endif %}
+            </td>
+
+            <td>{% if compra.estadoEnvio %}
+                Aprobado
+                {% else %}
+                Pendiente
+                {% endif %}
+            </td>
+        </tr>
         {% empty %}
-            <tr>
-                <td colspan="5">No se encontraron compras.</td>
-            </tr>
+        <tr>
+            <td colspan="5">No se encontraron compras.</td>
+        </tr>
         {% endfor %}
     </tbody>
 </table>

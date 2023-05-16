@@ -24,6 +24,34 @@
     height: 325px;
 }
 
+#labelFiltro > a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 100%;
+    transition: font-size 0.3s ease;
+}
+
+#labelFiltro > a:hover{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 150%;
+}
+
+.filtro-linea {
+    border: none;
+    border-bottom: 1px solid #000;
+    margin: 10px 0;
+  }
+
+#botonFiltro{
+    font-size: 120%;
+    margin-bottom: 1%;
+    width: 20%;
+    height: 6vh;
+}
+
 @media (max-width: 1201px ){
     #imgPro{
         width: 325px;

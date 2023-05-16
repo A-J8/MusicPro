@@ -5,17 +5,19 @@ from multiprocessing.dummy import Value
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 # Create your models here.
 
-
+class TipoProducto(models.Model):
+    nombre = models.CharField(max_length=40)
+    
 class Producto(models.Model):
     nombre = models.CharField(max_length=40)
     precio = models.IntegerField(default=0)
     stock = models.IntegerField(default=0)
     imagen =models.ImageField(upload_to='media/')
     descripcion = models.CharField(max_length=500, default='')
+    idTipoProducto = models.ForeignKey(TipoProducto, on_delete=models.SET_NULL, null=True)
     def __str__(self):
         return f'{self.nombre}'
-    
-
+  
 
 # Create models Usuario.
 class Usuario(models.Model):
@@ -49,7 +51,6 @@ class UsuarioInvitado(models.Model):
     codigoPostal = models.IntegerField(max_length=50, default= 0)
     estado = models.CharField(max_length=50, default= '')
     ciudad = models.CharField(max_length=50, default= '')
-# create models historial
 
 class Historial(models.Model):
     fecha = models.DateTimeField(auto_now_add=True)

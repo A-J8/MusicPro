@@ -1,30 +1,45 @@
 {% extends "core/layout.html" %}
 {% load static %}
-{% block title %}MusicPro{% endblock %}
+{% block title %}Actualizar Usuario{% endblock %}
 {% block head %}
-<link rel="stylesheet" href="{% static 'core/css/historial.css' %}">
-{% endblock %}  
+    <link href="{% static 'core/css/micuenta 1.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
 {% block content %}
 
+<div id="pantalla">
+    <form id="formRegistro" method="post"  action="/editar_perfil/{{ usuario.email }}"> 
+        {% csrf_token %}
+        <div class="form-group" id="titulo">
+            <h1>Editar Cuenta</h1>
+        </div> 
+        <div class="form-group" id="formNombre">
+            <label for=" exampleInputEmail1">Nombre</label>
+            <input type="text" class="form-control"     id="inputNombre" name="nombre" value="{{ usuario.nombre }}">
+        </div>
+        <div class="form-group" id="formNombre">
+            <label for=" exampleInputEmail1">Apellido</label>
+            <input type="text" class="form-control"     id="inputNombre" name="apellido" value="{{ usuario.apellido }}">
+        </div>
+        <div class="form-group" id="formCorreo">
+            <label for="exampleInputEmail1">Correo electrónico</label>
+            <input type="email" class="form-control" id="inputCorreo" aria-describedby="emailHelp" name="email" value="{{ usuario.email }}" readonly >
+        </div>
+        <div class="form-group" id="formContraseña">
+            <label for="exampleInputPassword1">Contraseña</label>
+            <input type="password" class="form-control" id="inputContraseña" name="password">
+        </div>
+        
+        <div id="boton">
+            <button type="submit" class="btn btn-dark " id="btnRegistrarse">Actualizar</button>
+            <a href="{% url 'perfil' %}" class="btn btn-dark" id="atras">Atrás</a>
+            
+        </div>
+    
+    </form>
 
-<h1>Editar cuenta</h1>
-	<form>
-		<label for="nombre">Nombre:</label>
-		<input type="text" id="nombre" name="nombre"><br><br>
-
-		<label for="apellido">Apellido:</label>
-		<input type="text" id="apellido" name="apellido"><br><br>
-
-		<label for="correo">Correo electrónico:</label>
-		<input type="email" id="correo" name="correo"><br><br>
-
-		<label for="contraseña">Contraseña:</label>
-		<input type="password" id="contraseña" name="contraseña"><br><br>
-
-		<label for="confirContraseña">Confirmar contraseña:</label>
-		<input type="password" id="confirContraseña" name="confirContraseña"><br><br>
-
-		<input type="submit" value="Guardar cambios">
-	</form>
-
-{% endblock %}  
+</div>
+        
+            
+        
+     
+{% endblock %}

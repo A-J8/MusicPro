@@ -1,51 +1,76 @@
-
-
 {% extends "core/layout.html" %}
 {% load static %}
 
 {% block title %}Login{% endblock %}
 
 {% block head %}
-    <link href="{% static 'core/css/login.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'core/css/login.css' %}" rel="stylesheet" type="text/css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script src="/docs/5.2/dist/js/bootstrap.bundle.min.js"integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"crossorigin="anonymous"></script> -->
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% endblock %}
 
 {% block content %}
 
-<div  class="ratio ratio-16x9" >
-   
+
+<div class="ratio ratio-16x9">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <form method="post" id="formLogin">
         {% csrf_token %}
         <div>
             <h1>LOGIN</h1>
+            <h1>{{usuarioNotFound}}</h1>
         </div>
         <!-- <div id="iconoLogin">
             <img src="#" alt="login" width="120">
         </div> -->
+        
+        <script> 
+            function realizarAccion() {
+                // Aquí va la lógica de la acción que deseas realizar
+                
+                // Ejemplo: Verificar si la acción fue exitosa
+                 // Cambia este valor según el resultado de la acción
+                const exitoso = "{{ usuarioNotFound }}";
+                console.log(exitoso)
+                // Mostrar mensaje de éxito o error según el resultado
+                if (exitoso == "False" ) {
+                    Swal.fire({
+                            title: 'Acción realizada con éxito',
+                            icon: 'success',
+                            timer: 3000,
+                            timerProgressBar: true,
+                            showConfirmButton: false
+                        });
+                } else {
+                    Swal.fire({
+                        title: 'Error al realizar la acción',
+                        icon: 'error',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        showConfirmButton: false
+                    });
+                }
+            }
+        </script>
         <div class="form-group" id="formCorreo">
-          <label for="exampleInputEmail1">Correo electrónico</label>
-          <input name="email" type="email" class="form-control" id="inputCorreo" aria-describedby="emailHelp" placeholder="Ingrese su correo">
+            <label for="exampleInputEmail1">Correo electrónico</label>
+            <input name="email" type="email" class="form-control" id="inputCorreo" aria-describedby="emailHelp"
+                placeholder="Ingrese su correo">
         </div>
         <div class="form-group" id="formContraseña">
-          <label for="exampleInputPassword1">Contraseña</label>
-          <input name="password" type="password" class="form-control" id="inputContraseña" placeholder="Ingrese su contraseña">
-        </div> 
-        <div class="botones" >
-            <form class="modal-body p-5 pt-0">
-                <button type="submit" class="btn btn-light  " id="btnIniciarSesion">Iniciar sesión</button>
-                <a class="btn btn-light" id="btnRegistrarse" href="{% url 'registro' %}">Registrarse</a>
-                
-            </form>
-            
+            <label for="exampleInputPassword1">Contraseña</label>
+            <input name="password" type="password" class="form-control" id="inputContraseña"
+                placeholder="Ingrese su contraseña">
         </div>
-        <!-- {% if messages %}
-        {% for m in messages %}
-        <label for="" style="text-align: center; color: white; font-size: x-large; text-align: center;">{{m}}</label>
-        {% endfor %}
-        {% endif %} -->
-    </form>
-    <script src="/docs/5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+        <div class="botones">
+            <button type="submit" class="btn btn-light" onclick="realizarAccion()" id="btnIniciarSesion">Iniciar sesión</button>
+            <a class="btn btn-light" id="btnRegistrarse" href="{% url 'registro' %}">Registrarse</a>
+        </div>
 
+        
 </div>
 
 

@@ -45,24 +45,24 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0" >
                         <li class="nav-item" >
-                            <a class="nav-link active" aria-current="page" href="{% url 'index' %}"> <img src="{% static 'core/img/iconinicio.png' %}" alt=""> Inicio</a>
+                            <a class="nav-link active" aria-current="page" href="{% url 'index' %}"> <img src="{% static 'core/img/iconinicio.png' %}" alt="" class="figure-img img-fluid"> Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="{% url 'carrito' %}"> <img src="{% static 'core/img/iconcarrito.png' %}" alt=""> Carrito</a>
+                            <a class="nav-link active" href="{% url 'carrito' %}"> <img src="{% static 'core/img/iconcarrito.png' %}" alt="" class="figure-img img-fluid"> Carrito</a>
                         </li>
                         
                         {% if "email" in request.session %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <img src="{% static 'core/img/iconcuenta.png' %}" alt=""> Mi Cuenta
+                                <img src="{% static 'core/img/iconcuenta.png' %}" alt="" class="figure-img img-fluid"> Mi Cuenta
                             </a>
                             <ul class="dropdown-menu">
                                 {% if request.session.email == "ADMIN@gmail.com" %}
                                     <a class="dropdown-item" id="eliminarCuenta" href="{% url 'administrador' %}">Administrador</a>
                                     
                                 {% endif %}
-                                <li><a class="dropdown-item" href="{% url 'micuenta' %}">Perfil</a></li>
+                                <li><a class="dropdown-item" href="{% url 'perfil' %}">Perfil</a></li>
                                 <!-- #class="nav-link active" -->
                                 <li><a class="dropdown-item" href="{% url 'historial' %}">Historial</a></li>
                                 <li><a class="dropdown-item" href="{% url 'cerrarSesion' %}">Cerrar Sesion</a></li>

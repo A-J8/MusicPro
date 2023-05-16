@@ -12,3 +12,8 @@ class UserRegisterForm(UserCreationForm):
 		model = User
 		fields = ['username', 'email', 'password1', 'password2']
 		help_texts = {k:"" for k in fields }
+
+class UsuarioForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['cam_auto', 'nombre', 'apellido', 'pwd', 'tipoUsuario', 'rut', 'direccion', 'telefono', 'codigoPostal', 'estado', 'ciudad']

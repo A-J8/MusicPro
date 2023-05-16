@@ -1,0 +1,33 @@
+
+#pantalla{
+    display: flex;
+    justify-content: center;
+    width: 40%;
+    height: 60%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    margin-top: 5%;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border-style: outset;
+    box-shadow: 5px 5px 50px 5px rgb(44, 44, 44);
+    border-radius: 10%;
+}
+
+#fondo{
+    margin-top: 15%;
+}
+#inputNombre{
+    width: 95%;
+}
+#inputCorreo{
+    width: 95%;
+}
+#inputContraseña{
+    width: 95%;
+}
+#botones{
+    justify-content: space-between;
+    margin-top: 5%;
+    
+}

@@ -1,0 +1,48 @@
+{% extends "core/layout.html" %}
+{% load static %}
+
+{% block title %}Ajustes de usuario{% endblock %}
+
+{% block head %}
+    <link href="{% static 'core/css/perfil 1.css' %}" rel="stylesheet" type="text/css">
+
+{% endblock %}
+
+{% block content %}
+     
+     <div id="pantalla">
+        <form method="post" id="formPerfil">   
+            {% csrf_token %}
+            <div class="form-group" id="titulo">
+                <h1>Perfil</h1>
+            </div> 
+            <div id="perfil_info">
+                {% for i in usuario %}
+                <h3>Nombre: {{ i.nombre }} {{ i.apellido }}</h3>
+                <br>
+                <p id="email" style="display: none;">{{ i.email }}</p>
+                <h3 id="correo">Email: *****@gmail.com</h3>
+                <div id="botones">
+                    <div>
+                        <button type="button" class="btn btn-dark" onclick="mostrarEmail(document.getElementById('email').textContent)">Ver Email</button>
+                        <a href="{% url 'actualizarPerfil'  i.email  %}" class="btn btn-dark" >Editar</a> 
+                    </div>
+                </div>
+                {% endfor %}
+                
+            </div>
+        </form>
+      </div>
+      <script>
+        function mostrarEmail(email){
+            document.getElementById("correo").innerHTML = "Email: "+email;
+        }
+    </script>
+
+{% endblock %}
+    
+        
+
+               
+
+

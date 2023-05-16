@@ -104,9 +104,11 @@
                     alt=""> <br><br>
                 <button type="submit" class="btn btn-dark">Transferencia</button>
             </div>
-    
-    
-    
+            {% if user.is_authenticated %}
+                <script>
+                    var sessionUser = "{{request.session.nombre}}";
+                </script>
+            {% endif %}
     
         </form>
     </div>
