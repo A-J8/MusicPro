@@ -66,6 +66,7 @@
             <table class="table"  style="color:rgb(0, 0, 0)">
               <thead>
                   <tr>
+                      <th scope="col">Correo</th>
                       <th scope="col">ID</th>
                       <th scope="col">tipo de usario Usuario</th>
                       <th scope="col">Estado del Envio</th>
@@ -78,18 +79,20 @@
                   {% for i in historial %}
                   <tr>
                       <th scope="row">{{ i.email }}</th>
-                      <td>{{ i.id }}</td>
+                      <td>#{{ i.id }}</td>
                       <td>{% if i.tipoUsuario %}  Logueado
                         {% else %} Invitado
                         {% endif %}
                       </td>
-                      <td>{{ i.estadoEnvio }}</td>
+                      <td>{% if i.estadoEnvio %} Aprobado
+                        {% else %}Rechazado
+                        {% endif %}</td>
                       <td>{% if i.estadoPago %} Aprobado
                         {% else %}Rechazado
                         {% endif %}
                       </td>
                       <td>{{ i.fecha }}</td>
-                      <td>{{ i.total }}</td>
+                      <td>${{ i.total }}</td>
                   </tr>
                   {% endfor %}
               </tbody>

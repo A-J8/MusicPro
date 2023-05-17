@@ -14,7 +14,7 @@ from django.http import JsonResponse
    
 
 def index(request):
-    #Usuario.objects.all().delete()
+
     contexto = {
         'productos' : Producto.objects.all(),
         'tipoProducto' : TipoProducto.objects.all()
@@ -49,14 +49,18 @@ def carrito(request):
 
 def pago(request, email):
     total = 0
+    mensaje = "Al estar registrado por compras con mas de 4 productos usted obtiene un descuento del 10%"
     if 'carrito' in request.session:
         for key, value in request.session["carrito"].items():
             total += int(value["acumulado"])
-            total = total * 0.9
+            if value["cantidad"] > 4:
+                    total = total * 0.9
+                    mensaje = "Usted tiene un descuento del 10% por estar registrado y hacer una compra de mas de 4 productos!"
     usuario = Usuario.objects.get(email = email)
     data = {
         'usuario': usuario,
-        'totalD' : total
+        'totalD' : total,
+        'mensaje' : mensaje
     }
     return render(request,'core/pago.html' ,  data)
 
@@ -301,7 +305,9 @@ def confirmarDatos(request, email):
         if 'carrito' in request.session:
             for key, value in request.session["carrito"].items():
                 total += int(value["acumulado"])
-                total = total * 0.9
+                if value["cantidad"] > 4:
+                    total = total * 0.9
+                    
         
         newHistorial = Historial(
             email = request.POST['email'],
@@ -419,7 +425,9 @@ def cambiarEstadoEnvio(request, id):
 def bodeguero(request):
     print("funca")
     contexto = {
-        'detalleCompra': DetalleCompra.objects.all()
+        'detalleCompra': DetalleCompra.objects.all(),
+        'producto': Producto.objects.all(),
+        'historial': Historial.objects.all()
     }
     return render(request,'core/bodeguero.html', contexto)
 

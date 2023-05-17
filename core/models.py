@@ -12,7 +12,7 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=40)
     precio = models.IntegerField(default=0)
     stock = models.IntegerField(default=0)
-    imagen =models.ImageField(upload_to='media/')
+    imagen =models.ImageField(upload_to='')
     descripcion = models.CharField(max_length=500, default='')
     idTipoProducto = models.ForeignKey(TipoProducto, on_delete=models.SET_NULL, null=True)
     def __str__(self):
@@ -77,7 +77,7 @@ class DetalleCompra(models.Model):
     idHistorial = models.IntegerField()
     idProducto = models.IntegerField()
     cantidad = models.IntegerField()
-    estadoStock = models.IntegerField(null=True)
+    estadoStock = models.IntegerField(null=False, default= 0)
     OPCION_0 = 'Pendiente'
     OPCION_1 = 'Despachado'
     OPCION_2 = 'Sin stock'
