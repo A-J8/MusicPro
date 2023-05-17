@@ -55,19 +55,36 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <img src="{% static 'core/img/iconcuenta.png' %}" alt="" class="figure-img img-fluid"> Mi Cuenta
+                                <img src="{% static 'core/img/iconcuenta.png' %}" alt="" class="figure-img img-fluid"> Mi Cuenta - {{ request.session.nombre }}
                             </a>
                             <ul class="dropdown-menu">
-                                {% if request.session.email == "ADMIN@gmail.com" %}
-                                    <a class="dropdown-item" id="eliminarCuenta" href="{% url 'administrador' %}">Administrador</a>
-                                    
-                                {% endif %}
+                                
                                 <li><a class="dropdown-item" href="{% url 'perfil' %}">Perfil</a></li>
                                 <!-- #class="nav-link active" -->
                                 <li><a class="dropdown-item" href="{% url 'historial' %}">Historial</a></li>
                                 <li><a class="dropdown-item" href="{% url 'cerrarSesion' %}">Cerrar Sesion</a></li>
                             </ul>
                         </li>
+                        {% if request.session.tipoUsuario == 1 %}
+                        <li class="nav-item" >
+                            <a class="nav-link active" aria-current="page" href="{% url 'administrador' %}"> Administrador</a>
+                        </li>
+                        {% endif %}
+                        {% if request.session.tipoUsuario == 2 %}
+                        <li class="nav-item" >
+                            <a class="nav-link active" aria-current="page" href="{% url 'contador' %}"> Contador</a>
+                        </li>
+                        {% endif %}
+                        {% if request.session.tipoUsuario == 3 %}
+                        <li class="nav-item" >
+                            <a class="nav-link active" aria-current="page" href="{% url 'vendedor' %}"> Vendedor</a>
+                        </li>
+                        {% endif %}
+                        {% if request.session.tipoUsuario == 4 %}
+                        <li class="nav-item" >
+                            <a class="nav-link active" aria-current="page" href="{% url 'bodeguero' %}"> Bodeguero</a>
+                        </li>
+                        {% endif %}
                         {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a>

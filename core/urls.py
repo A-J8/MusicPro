@@ -47,12 +47,20 @@ urlpatterns = [
 
     #funciones bodeguero
     path('bodeguero', bodeguero, name="bodeguero"),
+    path('bodegueroStock', bodegueroStock, name="bodegueroStock"),
+    path('cambiarEstadoStock/<int:id>', cambiarEstadoStock, name="cambiarEstadoStock"),
+    path('SinStock/<int:id>', SinStock, name="SinStock"),
+    path('ConStock/<int:id>', ConStock, name="ConStock"),
+    path('ActualizarStock/', ActualizarStock, name="ActualizarStock"),
 
     #funciones de administrador
     path('usuarioAdmin', usuarioAdmin, name="usuarioAdmin"),
     path('crudUsuario', crudUsuario, name="crudUsuario"),
-    # path('eliminarUsuario/<email>', eliminarUsuario, name='eliminarUsuario'),
-    path('eliminarUsuario/<email>', eliminarUsuario, name='eliminarUsuario'),
+    path('eliminarUsuario/<email>', eliminarUsuario, name="eliminarUsuario"),
+    path('EditarUsuario', EditarUsuario, name='EditarUsuario'),
+    path('EditarUsuario/<email>', EditarUsuario, name='EditarUsuario'),
+    path('editar_usuario', editar_usuario, name='editar_usuario'),
+    path('actualizarUsuario/<email>', actualizarUsuario, name='actualizarUsuario'),
     # path('fromUsuario', fromUsuario, name="fromUsuario"),
     path('repVentas', repVentas, name="repVentas"),
     path('repdesptienda', repdesptienda, name="repdesptienda"),

@@ -7,9 +7,14 @@ from django.contrib import messages
 # from .forms import UserRegisterForm
 from django.shortcuts import render
 from .models import *
+from .models import DetalleCompra
+from django.http import JsonResponse
 # Create your views here.
 
+   
+
 def index(request):
+    #Usuario.objects.all().delete()
     contexto = {
         'productos' : Producto.objects.all(),
         'tipoProducto' : TipoProducto.objects.all()
@@ -27,9 +32,10 @@ def filtrar(request, id):
     return render(request, 'core/index.html', contexto)
 
 def producto(request, id):
-    producto = Producto.objects.get(id=id)
+    
     data = {
-        'producto': producto
+        'producto' : Producto.objects.get(id=id),
+        'tipoProducto' : TipoProducto.objects.all()
     }
     return render(request, 'core/producto.html', data)
 
@@ -42,8 +48,17 @@ def carrito(request):
 
 
 def pago(request, email):
+    total = 0
+    if 'carrito' in request.session:
+        for key, value in request.session["carrito"].items():
+            total += int(value["acumulado"])
+            total = total * 0.9
     usuario = Usuario.objects.get(email = email)
-    return render(request,'core/pago.html' ,  {'usuario':usuario})
+    data = {
+        'usuario': usuario,
+        'totalD' : total
+    }
+    return render(request,'core/pago.html' ,  data)
 
 def pagoInvitado1(request):
     return render(request,'core/pagoInvitado.html' )
@@ -87,6 +102,7 @@ def login(request):
             newUser = Usuario.objects.get(email = request.POST['email'], pwd = request.POST['password'])
             request.session['email'] = newUser.email
             request.session['nombre'] = newUser.nombre
+            request.session['apellido'] = newUser.apellido
             request.session['tipoUsuario'] = newUser.tipoUsuario
             if newUser.tipoUsuario == 1:
                 return redirect('administrador')
@@ -122,7 +138,7 @@ def registro(request):
                 apellido = request.POST['apellido'],
                 email = request.POST['email'],
                 pwd = request.POST['password'],
-                tipo_usuario = False
+                tipoUsuario = False
             )
             
             newUser.save()
@@ -151,13 +167,39 @@ def crudUsuario(request):
                 apellido = request.POST['apellido'],
                 email = request.POST['email'],
                 pwd = request.POST['password'],
-                tipo_usuario = False
+                tipoUsuario = False
             )
             
             newUser.save()
             messages.success(request, 'Usuario registrado correctamente')
             return redirect('usuarioAdmin')
     return render(request,'core/crudUsuarioad.html' )
+# Funcion de editar usuarios del admin
+def EditarUsuario(request, email):
+    contexto = {'usuario' : Usuario.objects.get(email=email)}
+    return render(request, 'core/actualizarUsuarioAdmin.html', contexto)
+
+# Funcion de actulizar el usuario como admin
+def actualizarUsuario(request, email):
+    usuario = Usuario.objects.get(email = email)
+    return render(request, 'core/micuenta.html', {'usuario':usuario})
+
+# Funcion para poder editar el usuario como admin
+def editar_usuario(request):
+        tipoUsuario = request.POST['tipoUsuario']
+        nombre = request.POST['nombre']
+        email = request.POST['email']
+        apellido = request.POST['apellido']
+        password = request.POST['password']
+        
+        oldemail = Usuario.objects.get(email = email) 
+        oldemail.tipoUsuario = tipoUsuario
+        oldemail.nombre = nombre
+        oldemail.apellido = apellido
+        oldemail.pwd = password
+        oldemail.save()
+        print("Usuario invitado actualizado con éxito.")
+        return redirect('usuarioAdmin')
 
  #elimina al usario por el id (funcion de admin).
 def eliminarUsuario(request, email):
@@ -167,15 +209,15 @@ def eliminarUsuario(request, email):
         return redirect('usuarioAdmin')
     # return render ( request,'core/usuariosAdmin.html' )
 
-# def fromUsuario(request):
-    
-#     return render(request, 'core/.html')
-
 def repVentas(request):
     contexto = {'historial': Historial.objects.all()}
     return render(request, 'core/repVentas.html' ,contexto)
 
 def repdesptienda(request):
+    # contexto = {'historial': Historial.objects.all()}
+    # historial = Historial.objects.all()
+    # contexto= [{'total': item.total} for item in historial]
+    # return JsonResponse(datos_formateados, safe=False)
     return render(request,'core/repdesempeñotienda.html'  ) 
 
 def repestrVentas(request):
@@ -259,6 +301,7 @@ def confirmarDatos(request, email):
         if 'carrito' in request.session:
             for key, value in request.session["carrito"].items():
                 total += int(value["acumulado"])
+                total = total * 0.9
         
         newHistorial = Historial(
             email = request.POST['email'],
@@ -374,7 +417,71 @@ def cambiarEstadoEnvio(request, id):
 
 #funciones bodeguero
 def bodeguero(request):
-    return render(request,'core/bodeguero.html' ) 
+    print("funca")
+    contexto = {
+        'detalleCompra': DetalleCompra.objects.all()
+    }
+    return render(request,'core/bodeguero.html', contexto)
+
+def bodegueroStock(request):
+    contexto = {
+        'productos' : Producto.objects.all()
+    }
+    return render(request,'core/bodegueroStock.html', contexto)
+
+def ActualizarStock(request):
+    contexto = {
+        'productos' : Producto.objects.all()
+    }
+    id = request.POST['id']
+    NewStock = int(request.POST['NewStock'])
+
+    oldStock =Producto.objects.get(id = id) 
+    oldStock.stock = oldStock.stock + NewStock
+    if oldStock.stock >= 0:
+        oldStock.save()
+    else:
+        messages.success(request, 'No puede ser menor a 0')
+    return render(request, 'core/bodegueroStock.html', contexto)
+
+
+def cambiarEstadoStock(request, id):
+    
+    contexto = {
+        'detalleCompra': DetalleCompra.objects.all()
+    }
+    detalleCompra = DetalleCompra.objects.get(id=id)
+    if detalleCompra.estadoStock == 0:
+        detalleCompra.estadoStock = 1
+        
+    elif detalleCompra.estadoStock == 1:
+        detalleCompra.estadoStock = 0
+    
+
+
+    detalleCompra.save()
+    return render(request, 'core/bodeguero.html', contexto)
+
+
+def SinStock(request, id):
+    contexto = {
+        'detalleCompra': DetalleCompra.objects.all()
+    }
+    detalleCompra = DetalleCompra.objects.get(id=id)
+    detalleCompra.estadoStock = 2
+    detalleCompra.save()
+    return render(request, 'core/bodeguero.html', contexto)
+
+def ConStock(request, id):
+    contexto = {
+        'detalleCompra': DetalleCompra.objects.all()
+    }
+    detalleCompra = DetalleCompra.objects.get(id=id)
+    detalleCompra.estadoStock = 0
+    detalleCompra.save()
+    return render(request, 'core/bodeguero.html', contexto)
+
+
 
 def perfil(request):
     usuario = Usuario.objects.filter(email = request.session['email'])

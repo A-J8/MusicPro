@@ -1,0 +1,89 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block title %}MusicPro{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'core/css/bodegueroStock.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{% endblock %}
+{% block content %}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-body-tertiary sidebar collapse">
+            <div class="position-sticky pt-3 sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#" id="btnInicio" style="color: black;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="feather feather-home align-text-bottom" aria-hidden="true">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            Dashboard
+                        </a>
+                    </li>
+
+                    <h6
+                        class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
+                        <span>Funciones</span>
+                    </h6>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'bodeguero' %}" id="btnPagos" style="color: black;"> Ordenes de Compra</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'bodegueroStock' %}" id="ActualizarStock" style="color: black;"> Actualizar Stock</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <H1>Menu Bodeguero</H1>
+
+            <div id="inicio" style="display: block; margin-top: 2%;">
+                <h4>Bienvenido {{request.session.nombre}}</h4>
+
+            </div>
+            <br><br>
+            
+            <!--TABLA DE ENVIOS-->
+            <div id="tblEnvios" style="display: block;">
+                <h2>Actualizar Stock</h2>
+                <div class="row row-cols-3">
+                    {% for i in productos %}
+                    
+                    <div class="col-sm-4 mb-4">
+                        <form action="/ActualizarStock/" method="post">
+                            {% csrf_token %}
+                            <div class="producto">
+
+                            <img id="imgPro" src="/{{i.imagen}}" class="figure-img img-fluid">
+
+                            <input type="hidden" id="id" name="id" value="{{i.id}}">
+                            <h4>{{i.nombre}}</h4>
+                            <p>precio: {{i.precio}}</p>
+                            <p>stock: {{i.stock}}</p>
+                            <Label for="NewStock">Actualizar Stock</Label>
+                            <input type="number" id="NewStock" name="NewStock"  size="4" class="" required>
+                            <button type="submit" class="btn-warning"> Actualizar</button>
+                            {% if messages %}
+                                {% for message in messages.success %}
+                                    <div class="success-message">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                            </div>
+                        </form>
+                        
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+{% endblock %}

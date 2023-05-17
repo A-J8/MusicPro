@@ -18,12 +18,20 @@
             <div style="margin: 1%;">
                 <h3>Descripcion</h3>
                 <p>{{producto.descripcion}}</p>
+                <p>{{tipoProductos.nombre}}</p>
                 <p>Stock: {{producto.stock}}</p>
+                {% for i in tipoProducto %}
+                    {% if producto.idTipoProducto == i %}
+                        <p>Tipo Instrumento: {{i.nombre}}</p>
+                    {% endif %}
+                {% endfor %}
+                
+                
             </div>
             <div style="margin: 1%;">
                 <h4>Precio: ${{producto.precio}}</h4>
-                {% if i.stock > 0 %}
-                <a href="{% url 'Add' i.id %}" class="btn btn-secondary"> <img
+                {% if producto.stock > 0 %}
+                <a href="{% url 'Add' producto.id %}" class="btn btn-secondary"> <img
                         src="{% static 'core/img/iconcarrito.png' %}" alt="" style="width: 20px;"> Agregar al
                     carrito</a>
                 {% else %}

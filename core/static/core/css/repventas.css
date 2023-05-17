@@ -5,22 +5,33 @@
     padding: 2%;
     margin: 5% 0% 5% 0%;
     background-color: rgb(255, 255, 255);
-    
+    color: rgb(0, 0, 0);
+    border-style: outset;
+    box-shadow: 5px 5px 50px 5px rgb(44, 44, 44);
+   
 
   }
 #sidebarMenu{
     width: 20%;
     height: 100%;
-    class:"col-md-3 col-lg-2 d-md-block bg-light sidebar ";
+    /* class:"col-md-3 col-lg-2 d-md-block bg-light sidebar "; */
     
 }
 #pantalla{
     width: 80%;
-    background-color: rgb(71, 126, 173);
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border-style: outset;
+    box-shadow: 5px 5px 50px 5px rgb(44, 44, 44);
+    border-radius: 1%;
 }
 #iconoInfo{
      color: black; 
 }
 .container-fluid{
+    height: auto;
+}
+#tabla{
     height: auto;
 }

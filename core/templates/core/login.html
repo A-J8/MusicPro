@@ -21,40 +21,8 @@
         {% csrf_token %}
         <div>
             <h1>LOGIN</h1>
-            <h1>{{usuarioNotFound}}</h1>
         </div>
-        <!-- <div id="iconoLogin">
-            <img src="#" alt="login" width="120">
-        </div> -->
         
-        <script> 
-            function realizarAccion() {
-                // Aquí va la lógica de la acción que deseas realizar
-                
-                // Ejemplo: Verificar si la acción fue exitosa
-                 // Cambia este valor según el resultado de la acción
-                const exitoso = "{{ usuarioNotFound }}";
-                console.log(exitoso)
-                // Mostrar mensaje de éxito o error según el resultado
-                if (exitoso == "False" ) {
-                    Swal.fire({
-                            title: 'Acción realizada con éxito',
-                            icon: 'success',
-                            timer: 3000,
-                            timerProgressBar: true,
-                            showConfirmButton: false
-                        });
-                } else {
-                    Swal.fire({
-                        title: 'Error al realizar la acción',
-                        icon: 'error',
-                        timer: 3000,
-                        timerProgressBar: true,
-                        showConfirmButton: false
-                    });
-                }
-            }
-        </script>
         <div class="form-group" id="formCorreo">
             <label for="exampleInputEmail1">Correo electrónico</label>
             <input name="email" type="email" class="form-control" id="inputCorreo" aria-describedby="emailHelp"

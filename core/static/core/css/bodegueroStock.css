@@ -1,0 +1,11 @@
+.producto{
+    width: 100%;
+    height: 400px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+#NewStock {
+    width: 50px;  /* Ajusta el ancho según tus necesidades */
+}

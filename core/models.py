@@ -17,7 +17,7 @@ class Producto(models.Model):
     idTipoProducto = models.ForeignKey(TipoProducto, on_delete=models.SET_NULL, null=True)
     def __str__(self):
         return f'{self.nombre}'
-  
+
 
 # Create models Usuario.
 class Usuario(models.Model):
@@ -77,6 +77,15 @@ class DetalleCompra(models.Model):
     idHistorial = models.IntegerField()
     idProducto = models.IntegerField()
     cantidad = models.IntegerField()
+    estadoStock = models.IntegerField(null=True)
+    OPCION_0 = 'Pendiente'
+    OPCION_1 = 'Despachado'
+    OPCION_2 = 'Sin stock'
+    OPCIONES_TIPO_PAGO = [
+        (0, OPCION_0),
+        (1, OPCION_1),
+        (2, OPCION_2),
+    ]
 
 
 # #ejemplo en prueba
