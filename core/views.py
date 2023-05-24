@@ -49,11 +49,13 @@ def carrito(request):
 
 def pago(request, email):
     total = 0
+    cantidadTotal = 0
     mensaje = "Al estar registrado por compras con mas de 4 productos usted obtiene un descuento del 10%"
     if 'carrito' in request.session:
         for key, value in request.session["carrito"].items():
             total += int(value["acumulado"])
-            if value["cantidad"] > 4:
+            cantidadTotal += int(value["cantidad"])
+            if cantidadTotal > 4:
                     total = total * 0.9
                     mensaje = "Usted tiene un descuento del 10% por estar registrado y hacer una compra de mas de 4 productos!"
     usuario = Usuario.objects.get(email = email)
@@ -301,11 +303,13 @@ def confirmarDatos(request, email):
         newUser.codigoPostal = request.POST['codigo_postal']         
         newUser.save()
         
+        cantidadTotal = 0
         total = 0
         if 'carrito' in request.session:
             for key, value in request.session["carrito"].items():
                 total += int(value["acumulado"])
-                if value["cantidad"] > 4:
+                cantidadTotal += int(value["cantidad"])
+                if cantidadTotal > 4:
                     total = total * 0.9
                     
         
