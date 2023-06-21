@@ -1,0 +1,20 @@
+{% extends "core/layout.html" %}
+{% load static %}
+{% block title %}MusicPro{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+
+<div>
+    <h1>Pago exitoso</h1> <br> 
+    <h3>DETALLE DEL PAGO</h3>
+
+    <p>Código de autorización de la transacción : {{comprobante}}</p>
+    <p>Estado del pago: {{estado}}</p>
+    <p>Fecha: {{fecha}}</p>
+    <p>Total pagado: {{monto}}</p>
+    <p>Cuotas: {{Ncuotas}}</p>
+    <p>Tarjeta: {{tarjeta}}</p>
+    <p>Orden de compra: {{ordenCompra}}</p>
+</div>
+{% endblock %}

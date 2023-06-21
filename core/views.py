@@ -1,5 +1,5 @@
 from datetime import datetime, date
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from .models import *
 from .Carrito import *
 from .context_processor import total_carrito
@@ -292,7 +292,6 @@ def cerrarSesion(request):
 
 def confirmarDatos(request, email):
     if request.method == 'POST':
-        print("funca0")
         newUser = Usuario.objects.get(email=email)
         
         newUser.rut = request.POST['rut'],
@@ -303,40 +302,45 @@ def confirmarDatos(request, email):
         newUser.codigoPostal = request.POST['codigo_postal']         
         newUser.save()
         
+        metodoPago = request.POST.get('metodoPago')
         cantidadTotal = 0
         total = 0
         if 'carrito' in request.session:
-            for key, value in request.session["carrito"].items():
+             for key, value in request.session["carrito"].items():
                 total += int(value["acumulado"])
                 cantidadTotal += int(value["cantidad"])
                 if cantidadTotal > 4:
                     total = total * 0.9
-                    
+        if metodoPago == '1':
+            url_destino = reverse('CrearTransaccion') + '?monto=' + str(total)
+            return redirect(url_destino)
         
-        newHistorial = Historial(
-            email = request.POST['email'],
-            fecha = datetime.today(),
-            total = total,
-            tipoPago = True,
-            tipoUsuario = True,
-        )
-        newHistorial.save()
-
-        for key, value in request.session["carrito"].items():
-            carrito = Carrito(request)
-            newDetalle = DetalleCompra(
-                idHistorial = newHistorial.id,
-                idProducto = value["producto_id"],
-                cantidad = value["cantidad"]
+        elif metodoPago == '2': 
+            newHistorial = Historial(
+                email = request.POST['email'],
+                fecha = datetime.today(),
+                total = total,
+                tipoPago = True,
+                tipoUsuario = True,
             )
-            newDetalle.save()
+            newHistorial.save()
+            
+            for key, value in request.session["carrito"].items():
+                carrito = Carrito(request)
+                newDetalle = DetalleCompra(
+                    idHistorial = newHistorial.id,
+                    idProducto = value["producto_id"],
+                    cantidad = value["cantidad"]
+                )
+                newDetalle.save()
 
-        for key, value in request.session["carrito"].items():
-            carrito = Carrito(request)
-            carrito.limpiar()
-        return redirect('datoTransferencia')
+            for key, value in request.session["carrito"].items():
+                carrito = Carrito(request)
+                carrito.limpiar()
+            return redirect('datoTransferencia')
+        else:
+            return redirect('contador')
     else:
-        print("nofunca3")
         return redirect('carrito')
 
 def datoInvitado(request):
@@ -368,31 +372,32 @@ def datoInvitado(request):
             tipoUsuario = False,
         )
         newHistorial.save()
+        request.session['email'] = request.POST['email']
+         
+        metodoPago = request.POST.get('metodoPago')
         
-        for key, value in request.session["carrito"].items():
-            carrito = Carrito(request)
-            newDetalle = DetalleCompra(
-                idHistorial = newHistorial.id,
-                idProducto = value["producto_id"],
-                cantidad = value["cantidad"]
-            )
-            newDetalle.save()
+        if metodoPago == '1':
+            url_destino = reverse('CrearTransaccion') + '?monto=' + str(total)
+            return redirect(url_destino)
+        
+        elif metodoPago == '2': 
+            for key, value in request.session["carrito"].items():
+                carrito = Carrito(request)
+                newDetalle = DetalleCompra(
+                    idHistorial = newHistorial.id,
+                    idProducto = value["producto_id"],
+                    cantidad = value["cantidad"]
+                )
+                newDetalle.save()
 
-        for key, value in request.session["carrito"].items():
-            carrito = Carrito(request)
-            carrito.limpiar()
-        return redirect('datoTransferencia')
+            for key, value in request.session["carrito"].items():
+                carrito = Carrito(request)
+                carrito.limpiar()
+            return redirect('datoTransferencia')
     else:
         print("nofunca3")
         return redirect('carrito')
         
-# def transferencia(request):
-#     for key, value in request.session["carrito"].items():
-#         carrito = Carrito(request)
-#         carrito.limpiar()
-#     return redirect( request, 'core/datoTransferencia.html')
-
-
 
 def editar(request, email = id):
     usuario = usuario.objects.get(id = email)
@@ -456,7 +461,6 @@ def ActualizarStock(request):
         messages.success(request, 'No puede ser menor a 0')
     return render(request, 'core/bodegueroStock.html', contexto)
 
-
 def cambiarEstadoStock(request, id):
     
     contexto = {
@@ -469,11 +473,8 @@ def cambiarEstadoStock(request, id):
     elif detalleCompra.estadoStock == 1:
         detalleCompra.estadoStock = 0
     
-
-
     detalleCompra.save()
     return render(request, 'core/bodeguero.html', contexto)
-
 
 def SinStock(request, id):
     contexto = {
@@ -492,7 +493,6 @@ def ConStock(request, id):
     detalleCompra.estadoStock = 0
     detalleCompra.save()
     return render(request, 'core/bodeguero.html', contexto)
-
 
 
 def perfil(request):
@@ -518,14 +518,94 @@ def editar_perfil(request, email):
         print("Usuario invitado actualizado con éxito.")
         return redirect('perfil')
     
-# def editarPerfil(request):
-#     nombre = request.POST['nombre']
-#     apellido = request.POST['apellido']
 
-#     oldemail = Usuario.objects.get(email = request.session['email'])  
-#     oldemail.nombre = nombre
-#     oldemail.apellido = apellido
-#     oldemail.save()
-#     messages.success(request, 'Usuario: ' + nombre +' Actualizado correctamente!')
-#     return redirect('perfil')
+# TRANSBANK
+from transbank.webpay.webpay_plus.transaction import Transaction
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
+def CrearTransaccion(request):
+    monto = request.GET.get('monto')
+    email = request.session['email']
+    print(monto)
+    amount = round(float(monto), 2) 
+    session_id = email
+    buy_order = 'buy_order' 
+    # Crear una instancia de la transacción
+    transaction = Transaction()
+    print(session_id)
+    # Llamar al método create() en la instancia de transacción
+    response = transaction.create(
+        buy_order=buy_order,
+        session_id=session_id,
+        amount=amount,
+        return_url='http://localhost:8000/webpay/RetornoTransaccion/'
+    )
+    token = response.get("token")
+    url = response.get("url")
+    
+    # Obtener URL de redirección
+    redirect_url = f"{url}?token_ws={token}"
 
+    # Redirigir al usuario a la URL de pago de Transbank
+    return redirect(redirect_url)
+
+
+def RetornoTransaccion(request):
+    token_ws = request.GET.get('token_ws')  # Obtener el token de la transacción desde la URL
+    if not token_ws:
+        return redirect('pagoFallido') 
+    transaction = Transaction()
+    resp = transaction.commit(token_ws)
+    
+
+    estado = resp.get('status')
+    
+    fechaISO8601 = resp.get('transaction_date')
+    fecha_hora = datetime.strptime(fechaISO8601, '%Y-%m-%dT%H:%M:%S.%fZ') # Analiza la fecha
+    fecha = fecha_hora.strftime('%d-%m-%Y %H:%M:%S') #Seteo del nuevo formato
+
+    data = {
+        'estado' : estado,
+        'fecha' : fecha,
+        'monto' : resp.get('amount'),
+        'Ncuotas' : resp.get('installments_number'),
+        'tarjeta' :  resp.get('card_detail').get('card_number'),
+        'comprobante' :  resp.get('authorization_code'),
+        'ordenCompra' : resp.get('buy_order')
+    }
+
+    if estado == 'FAILED':
+        return redirect('pagoFallido')
+    
+    else:
+        newHistorial = Historial(
+            email = request.session['email'],
+            fecha = fecha,
+            total = resp.get('amount'),
+            tipoPago = False,
+            tipoUsuario = request.session['tipoUsuario'],
+        )
+        newHistorial.save()
+            
+        for key, value in request.session["carrito"].items():
+            carrito = Carrito(request)
+            newDetalle = DetalleCompra(
+                idHistorial = newHistorial.id,
+                idProducto = value["producto_id"],
+                cantidad = value["cantidad"]
+            )
+            newDetalle.save()
+        for key, value in request.session["carrito"].items():
+            carrito = Carrito(request)
+            carrito.limpiar()
+        del request.session['email']
+        request.session.modified = True
+        
+        return render(request, 'core/pagoExitoso.html', data)
+
+
+def pagoExitoso(request):
+    return render(request, 'core/pagoExitoso.html')
+
+def pagoFallido(request):
+    return render(request, 'core/pagoFallido.html')

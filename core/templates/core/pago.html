@@ -45,12 +45,12 @@
                     <td colspan="3">${{total_carrito}} CLP</td>
                 </div>
                 <td>{{mensaje}}</td>
-                
+
                 <div id="total">
-                <td>Total a pagar:</td>
-                <td colspan="3">${{totalD}} CLP</td>
+                    <td>Total a pagar:</td>
+                    <td colspan="3">${{totalD}} CLP</td>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -62,39 +62,45 @@
             <input type="text" id="nombre" name="nombre" value="{{ usuario.nombre }}" readonly> </input>
             <label for="apellido">Apellido:</label>
             <input type="text" id="apellido" name="apellido" required="" value="{{ usuario.apellido }}"
-            readonly><br><br>
+                readonly><br><br>
             <label for="email">Correo Electronico:</label>
-            <input type="email" id="email" name="email" required="" value="{{ usuario.email }}"  readonly>
+            <input type="email" id="email" name="email" required="" value="{{ usuario.email }}" readonly>
             <label for="rut">Rut:</label>
-            <input type="text" id="rut" name="rut" required=""  maxlength="10"  ><br><br>
+            <input type="text" id="rut" name="rut" required="" maxlength="10"><br><br>
             <label for="telefono">Telefono:</label>
-            <input type="text" id="telefono" name="telefono" required="" maxlength="12"
-                ><br><br>
+            <input type="text" id="telefono" name="telefono" required="" maxlength="12"><br><br>
             <button type="submit" id="btn-opcion" class="btn btn-dark">Continuar</button>
             <br><br>
         </div>
 
-        
+
         <h2>2. Envio</h2>
         <div id="myOption" style="display: none;">
             <label for="direccion">Dirección:</label>
             <input type="text" id="direccion" name="direccion" required="">
             <label for="ciudad">Ciudad:</label>
-            <input type="text" id="ciudad" name="ciudad" required="" ><br><br>
+            <input type="text" id="ciudad" name="ciudad" required=""><br><br>
             <label for="estado">Estado:</label>
-            <input type="text" id="estado" name="estado" required=""  >
+            <input type="text" id="estado" name="estado" required="">
             <label for="codigo_postal">Código Postal:</label>
             <input type="text" id="codigo_postal" name="codigo_postal" required=""><br><br>
-                
+
             <a id="atrasEnvio" class="btn btn-dark">Atrás</a>
 
             <a id="btn-opcion2" class="btn btn-dark">Continuar</a>
             <br><br>
         </div>
         <h2>3. Pago</h2>
+
         <div id="myOption2" style="display: none;">
-            <button class="btn btn-dark">Webpay</button><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIYZgSlplNsbihDH6JYCj5jtAdaZ-ATKXS9h_6wEJ8okjdZ5Wf5tfMZLjMHIuMQNMFPWY&usqp=CAU" alt=""> <br><br>
-            <button type="submit" class="btn btn-dark">Transferencia</button>
+            <select id="metodoPago" name="metodoPago" class="form-select" aria-label="Default select example">
+                <option disabled selected>Seleccion el tipo de pago</option>
+                <option value="1">WebPay</option>
+                <option value="2">Transbank</option>
+            </select>
+            <br>
+            <button type="submit" class="btn btn-dark" id="pagar">Pagar</button>
+
         </div>
 
 

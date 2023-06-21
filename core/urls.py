@@ -66,6 +66,12 @@ urlpatterns = [
     path('repdesptienda', repdesptienda, name="repdesptienda"),
     path('repestrVentas', repestrVentas, name="repestrVentas"),
 
+    #TRANSBANK
+    path('CrearTransaccion', CrearTransaccion, name="CrearTransaccion"),
+    path('webpay/RetornoTransaccion/', RetornoTransaccion, name="RetornoTransaccion"),
+     
+    path('pagoExitoso', pagoExitoso, name="pagoExitoso"),
+    path('pagoFallido', pagoFallido, name="pagoFallido"),
 
     re_path(r'^media/(?P<path>.*)$', serve, {
         'document_root': settings.MEDIA_ROOT,

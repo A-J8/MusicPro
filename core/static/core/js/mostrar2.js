@@ -64,6 +64,18 @@ if (direccion.value === '') {
 }
 });
 
+var pagar = document.getElementById("pagar");
+var metodoPago = document.getElementById("metodoPago");
+pagar.addEventListener("click", function(){
+if (metodoPago.value === 'None') {
+    event.preventDefault();
+    alert('Debes seleccionar una opcion');
+    setError(form.metodoPago, 'Debe escoger un metodo de pago')
+}else{
+    
+}
+});
+
 // function transfer (){
 //     var valorActivo = document.querySelector('input[name="MetodPago"]:checked').value;
 //     var datos = document.getElementById("datosTransferencia");

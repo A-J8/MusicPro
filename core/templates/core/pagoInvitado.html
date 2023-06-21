@@ -99,10 +99,14 @@
             </div>
             <h2>3. Pago</h2>
             <div id="myOption2" style="display: none;">
-                <button class="btn btn-dark">Webpay</button><img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIYZgSlplNsbihDH6JYCj5jtAdaZ-ATKXS9h_6wEJ8okjdZ5Wf5tfMZLjMHIuMQNMFPWY&usqp=CAU"
-                    alt=""> <br><br>
-                <button type="submit" class="btn btn-dark">Transferencia</button>
+                <select id="metodoPago" name="metodoPago" class="form-select" aria-label="Default select example">
+                    <option disabled selected>Seleccion el tipo de pago</option>
+                    <option value="1">WebPay</option>
+                    <option value="2">Transbank</option>
+                </select>
+                <br>
+                <button type="submit" class="btn btn-dark" id="pagar">Pagar</button>
+    
             </div>
             {% if user.is_authenticated %}
                 <script>
