@@ -39,6 +39,36 @@
   </button>
 </div>
 
+
+<!--API Tiempo-->
+<div class="tiempo"
+  style="color: #fff; display: flex; width: 100%; height: 200px; flex-direction: row;">
+  <div style="width: 50%; background-color: #004766; display: flex; align-items: end; justify-content: center; display: flex; flex-direction: column;">
+    <p style="padding-right: 3%; font-size: 30px; text-align: right;">El tiempo de nuestra sucursal en Melipilla</p>
+  </div>
+  {% if weather_data.weather %}
+  <div class="temperatura" style="width: 25%; background-color: #009EE2; display: flex; justify-content: center; flex-direction: column; padding-left: 2%;" >
+    <div style="font-size: 30px; ">
+      <p style="font-size: 35px; margin-bottom: -10px; ">{{ fecha }}</p>
+      <p style="color: #015072; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">{{ weather_data.weather.0.description }}</p>
+    </div>
+    <div style="display: flex; flex-direction: row; align-items: center; margin-top: -30px; ">
+      <p style="font-size: xx-large; "> {{ weather_data.main.temp }} °C</p>
+      {% with icon_url=weather_data.weather.0.icon %}
+      <img src="http://openweathermap.org/img/wn/{{ icon_url }}.png" alt="Weather Icon">
+      {% endwith %}
+      {% endif %}
+    </div>
+    <div>
+      <p style="font-size: 15px; margin-top: -20px;">Humedad: {{ weather_data.main.humidity }}%</p>
+    </div>
+  </div>
+  <div class="viento" style="width: 25%; background-color: #009EE2; font-size: x-large; display: flex; justify-content: center; flex-direction: column; padding-left: 2%;">
+    <li style="margin-top: -20px;"> La velocidad del Viento es de {{ weather_data.wind.speed }} m/s</li>
+    <li style="margin-top: 5px;">{{ weather_data.clouds.all }}% Nublado <img src="{% static 'core/img/nube.png' %}" alt="nube" style="width: 35px;"></li>
+  </div>
+</div>
+
 <!--MARKETPLACE PRODUCTOS-->
 <div class="cuadroProductos">
   <h1 style="display: flex; justify-content: center; font-size: 500%;">Productos</h1>
