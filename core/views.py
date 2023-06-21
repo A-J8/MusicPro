@@ -11,14 +11,32 @@ from .models import DetalleCompra
 from django.http import JsonResponse
 # Create your views here.
 
+#API del tiempo
+from .apiTiempo import get_weather_data
+import locale
+from django.conf import settings
    
-
 def index(request):
+    api_key = "7a57daf636775b047f328f8d78cf057a"
+    #Coordenadas de Simulacion Local de Melipilla
+    lat = -33.685983770235346
+    lon = -71.21694948040461
+    weather_data = get_weather_data(api_key, lat, lon)
+    print(weather_data)
+
+    fecha_actual = datetime.now()
+    # Configurar la localización en español
+    locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+    # Formatear la fecha en español
+    fecha_formateada = fecha_actual.strftime('%A %d de %B')
 
     contexto = {
         'productos' : Producto.objects.all(),
-        'tipoProducto' : TipoProducto.objects.all()
+        'tipoProducto' : TipoProducto.objects.all(),
+        "weather_data": weather_data,
+        "fecha": fecha_formateada
         }
+    print(date)
     return render(request,'core/index.html', contexto)
 
 def filtrar(request, id):
