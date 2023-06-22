@@ -84,6 +84,13 @@ def pago(request, email):
     }
     return render(request,'core/pago.html' ,  data)
 
+
+def bandas(request):
+    resultado = requests.get("http://127.0.0.1:5000/bandas")
+    bandas = resultado.json()
+    data = {'bandas':bandas}
+    return render(request,'core/bandas.html', data)
+
 def pagoInvitado1(request):
     return render(request,'core/pagoInvitado.html' )
 
