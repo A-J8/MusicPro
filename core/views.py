@@ -8,6 +8,8 @@ from django.contrib import messages
 from django.shortcuts import render
 from .models import *
 from .models import DetalleCompra
+import requests
+from .apibanco import obtener_valor_dolar
 from django.http import JsonResponse
 # Create your views here.
 
@@ -66,6 +68,10 @@ def carrito(request):
 
 
 def pago(request, email):
+    fecha =  datetime.now().strftime('%Y-%m-%d')
+    api_key = "user=211730625&pass=uVYeQQAvWY3J"
+    serie1 = "F073.TCO.PRE.Z.D"
+    dolar = obtener_valor_dolar(fecha, api_key,serie1)
     total = 0
     cantidadTotal = 0
     mensaje = "Al estar registrado por compras con mas de 4 productos usted obtiene un descuento del 10%"
@@ -80,7 +86,8 @@ def pago(request, email):
     data = {
         'usuario': usuario,
         'totalD' : total,
-        'mensaje' : mensaje
+        'mensaje' : mensaje,
+        'dolar' : dolar
     }
     return render(request,'core/pago.html' ,  data)
 

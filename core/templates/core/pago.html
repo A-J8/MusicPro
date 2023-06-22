@@ -39,6 +39,7 @@
         <div class="precio">
 
             <div class="monto">
+                <p>El valor del dólar en Chile es:  ${% for item in dolar.Series.Obs %}{{ item.value }}{% endfor %}</p>
                 <br>
                 <h2>Total</h2>
                 <div id="total">

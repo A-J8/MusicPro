@@ -74,6 +74,10 @@ urlpatterns = [
     path('pagoExitoso', pagoExitoso, name="pagoExitoso"),
     path('pagoFallido', pagoFallido, name="pagoFallido"),
 
+
+    #Api Banco Central
+    
+    path('valor-dolar/', obtener_valor_dolar, name='valor_dolar'),
     re_path(r'^media/(?P<path>.*)$', serve, {
         'document_root': settings.MEDIA_ROOT,
     })  
