@@ -99,7 +99,14 @@ def bandas(request):
     return render(request,'core/bandas.html', data)
 
 def pagoInvitado1(request):
-    return render(request,'core/pagoInvitado.html' )
+    fecha =  datetime.now().strftime('%Y-%m-%d')
+    api_key = "user=211730625&pass=uVYeQQAvWY3J"
+    serie1 = "F073.TCO.PRE.Z.D"
+    dolar = obtener_valor_dolar(fecha, api_key,serie1)
+    dolar = {
+        'dolar' : dolar
+    }
+    return render(request,'core/pagoInvitado.html', dolar)
 
 def perfil(request):
     return render(request,'core/perfil.html' )
