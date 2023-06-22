@@ -1,0 +1,32 @@
+{% extends "core/layout.html" %}
+{% load static %}
+
+{% block title %}API de bandas{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>API de bandas</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre de banda</th>
+                    <th>Marca que usan</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for banda in bandas %}
+                    <tr>
+                        <td>{{ banda.id }}</td>
+                        <td>{{ banda.nombre }}</td>
+                        <td>{{ banda.Marca }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
