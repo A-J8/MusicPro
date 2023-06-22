@@ -20,6 +20,7 @@ urlpatterns = [
     path('comprar', comprar, name="comprar"),
     path('datoTransferencia', datoTransferencia, name="datoTransferencia"),
     path('vendedor/',vendedor, name="vendedor"),
+    path('bandas/', bandas, name="bandas"),
 
     #funcion perfil
     
