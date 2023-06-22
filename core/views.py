@@ -557,24 +557,28 @@ def editar_perfil(request, email):
         print("Usuario invitado actualizado con éxito.")
         return redirect('perfil')
     
+import random
+
+def generarNumero():
+    numero_aleatorio = random.randint(1, 10000000) 
+    return numero_aleatorio
 
 # TRANSBANK
 from transbank.webpay.webpay_plus.transaction import Transaction
-from django.views.decorators.csrf import csrf_exempt
-@csrf_exempt
+
 def CrearTransaccion(request):
     monto = request.GET.get('monto')
     email = request.session['email']
-    print(monto)
+    numero = generarNumero()
+    buy_order = str(numero)
+
     amount = round(float(monto), 2) 
     session_id = email
-    buy_order = 'buy_order' 
     # Crear una instancia de la transacción
     transaction = Transaction()
-    print(session_id)
     # Llamar al método create() en la instancia de transacción
     response = transaction.create(
-        buy_order=buy_order,
+        buy_order= buy_order,
         session_id=session_id,
         amount=amount,
         return_url='http://localhost:8000/webpay/RetornoTransaccion/'
@@ -582,7 +586,6 @@ def CrearTransaccion(request):
     token = response.get("token")
     url = response.get("url")
     
-    # Obtener URL de redirección
     redirect_url = f"{url}?token_ws={token}"
 
     # Redirigir al usuario a la URL de pago de Transbank
@@ -595,22 +598,34 @@ def RetornoTransaccion(request):
         return redirect('pagoFallido') 
     transaction = Transaction()
     resp = transaction.commit(token_ws)
-    
 
     estado = resp.get('status')
-    
     fechaISO8601 = resp.get('transaction_date')
     fecha_hora = datetime.strptime(fechaISO8601, '%Y-%m-%dT%H:%M:%S.%fZ') # Analiza la fecha
     fecha = fecha_hora.strftime('%d-%m-%Y %H:%M:%S') #Seteo del nuevo formato
+    
+    tipoUsuario = request.session['tipoUsuario'] #Se setea el tipo de usuario (logueado o no)
+    if tipoUsuario <= 0:
+        TUsuario = True
+    else:
+        TUsuario = False
 
-    data = {
+    nombres_productos = []    #Aqui se crea un lista para pasar los productos comprados
+    for key, value in request.session["carrito"].items():
+        producto = Producto.objects.get(id=value["producto_id"])
+        nombres_productos.append(producto.nombre)
+
+    productosComprados = ", ".join(nombres_productos)
+
+    data = { #Datos enviados para mostrar al finalizar compra
         'estado' : estado,
         'fecha' : fecha,
         'monto' : resp.get('amount'),
         'Ncuotas' : resp.get('installments_number'),
         'tarjeta' :  resp.get('card_detail').get('card_number'),
         'comprobante' :  resp.get('authorization_code'),
-        'ordenCompra' : resp.get('buy_order')
+        'ordenCompra' : resp.get('buy_order'),
+        'productos' : productosComprados
     }
 
     if estado == 'FAILED':
@@ -618,11 +633,11 @@ def RetornoTransaccion(request):
     
     else:
         newHistorial = Historial(
-            email = request.session['email'],
+            email = resp.get('session_id'),
             fecha = fecha,
             total = resp.get('amount'),
             tipoPago = False,
-            tipoUsuario = request.session['tipoUsuario'],
+            tipoUsuario = TUsuario,
         )
         newHistorial.save()
             
@@ -637,8 +652,10 @@ def RetornoTransaccion(request):
         for key, value in request.session["carrito"].items():
             carrito = Carrito(request)
             carrito.limpiar()
-        del request.session['email']
-        request.session.modified = True
+        
+        if TUsuario == False:
+            del request.session['email']
+            request.session.modified = True
         
         return render(request, 'core/pagoExitoso.html', data)
 
