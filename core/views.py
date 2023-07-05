@@ -320,11 +320,32 @@ def datoTransferencia(request):
 def cerrarSesion(request):
     del request.session['email']
     request.session.modified = True
+
+    api_key = "7a57daf636775b047f328f8d78cf057a"
+    #Coordenadas de Simulacion Local de Melipilla
+    lat = -35.80323780506383
+    lon = -71.8884938534825
+    weather_data = get_weather_data(api_key, lat, lon)
+    print(weather_data)
+
+    fecha_actual = datetime.now()
+    # Configurar la localización en español
+    locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+    # Formatear la fecha en español
+    fecha_formateada = fecha_actual.strftime('%A %d de %B')
+
+    contexto = {
+        'productos' : Producto.objects.all(),
+        'tipoProducto' : TipoProducto.objects.all(),
+        "weather_data": weather_data,
+        "fecha": fecha_formateada
+        }
+    
     if 'carrito' in request.session:
         for key, value in request.session["carrito"].items():
             carrito = Carrito(request)
             carrito.limpiar()
-    return render(request, 'core/index.html')
+    return render(request, 'core/index.html', contexto)
 
 
 #Guarda datos del usario elegido.
