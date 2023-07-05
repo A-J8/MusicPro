@@ -625,7 +625,12 @@ def RetornoTransaccion(request):
     fecha_hora = datetime.strptime(fechaISO8601, '%Y-%m-%dT%H:%M:%S.%fZ') # Analiza la fecha
     fecha = fecha_hora.strftime('%d-%m-%Y %H:%M:%S') #Seteo del nuevo formato
     
-    tipoUsuario = request.session['tipoUsuario'] #Se setea el tipo de usuario (logueado o no)
+    try:
+        tipoUsuario = request.session['tipoUsuario'] #para error
+    except KeyError:
+        tipoUsuario = 0
+
+   
     if tipoUsuario <= 0:
         TUsuario = True
     else:
