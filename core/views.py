@@ -637,9 +637,10 @@ def RetornoTransaccion(request):
         TUsuario = False
 
     nombres_productos = []    #Aqui se crea un lista para pasar los productos comprados
-    for key, value in request.session["carrito"].items():
-        producto = Producto.objects.get(id=value["producto_id"])
-        nombres_productos.append(producto.nombre)
+    if 'carrito' in request.session:
+        for key, value in request.session["carrito"].items():
+            producto = Producto.objects.get(id=value["producto_id"])
+            nombres_productos.append(producto.nombre)
 
     productosComprados = ", ".join(nombres_productos)
 
