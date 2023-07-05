@@ -17,6 +17,8 @@ from django.http import JsonResponse
 from .apiTiempo import get_weather_data
 import locale
 from django.conf import settings
+from rest_framework import generics
+from .serializers import ProductoSerializer
    
 def index(request):
     api_key = "7a57daf636775b047f328f8d78cf057a"
