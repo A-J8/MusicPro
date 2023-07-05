@@ -692,3 +692,11 @@ def pagoExitoso(request):
 
 def pagoFallido(request):
     return render(request, 'core/pagoFallido.html')
+
+class ProductoList(generics.ListAPIView):
+    queryset = Producto.objects.all()
+    serializer_class = ProductoSerializer
+
+class ProductoDetail(generics.RetrieveAPIView):
+    queryset = Producto.objects.all()
+    serializer_class = ProductoSerializer
