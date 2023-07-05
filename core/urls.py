@@ -21,6 +21,8 @@ urlpatterns = [
     path('datoTransferencia', datoTransferencia, name="datoTransferencia"),
     path('vendedor/',vendedor, name="vendedor"),
     path('bandas/', bandas, name="bandas"),
+    path('productos/', ProductoList.as_view(), name='producto-list'),
+    path('productos/<int:pk>/', ProductoDetail.as_view(), name='producto-detail'),
 
     #funcion perfil
     
