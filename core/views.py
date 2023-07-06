@@ -615,7 +615,7 @@ def CrearTransaccion(request):
     return redirect(redirect_url)
 
 
-def RetornoTransaccion(request):
+def RetornoTransaccion2(request): #esta tienen los errores en request
     token_ws = request.GET.get('token_ws')  # Obtener el token de la transacción desde la URL
     if not token_ws:
         return redirect('pagoFallido') 
@@ -689,6 +689,79 @@ def RetornoTransaccion(request):
         return render(request, 'core/pagoExitoso.html', data)
 
 
+def RetornoTransaccion(request):
+    token_ws = request.GET.get('token_ws')  # Obtener el token de la transacción desde la URL
+    if not token_ws:
+        return redirect('pagoFallido') 
+    transaction = Transaction()
+    resp = transaction.commit(token_ws)
+
+    estado = resp.get('status')
+    fechaISO8601 = resp.get('transaction_date')
+    fecha_hora = datetime.strptime(fechaISO8601, '%Y-%m-%dT%H:%M:%S.%fZ') # Analiza la fecha
+    fecha = fecha_hora.strftime('%d-%m-%Y %H:%M:%S') #Seteo del nuevo formato
+    
+    # try:
+    #     tipoUsuario = request.session['tipoUsuario'] #para error
+    # except KeyError:
+    #     tipoUsuario = 0
+
+   
+    # if tipoUsuario <= 0:
+    #     TUsuario = True
+    # else:
+    #     TUsuario = False
+
+    # nombres_productos = []    #Aqui se crea un lista para pasar los productos comprados
+    # if 'carrito' in request.session:
+    #     for key, value in request.session["carrito"].items():
+    #         producto = Producto.objects.get(id=value["producto_id"])
+    #         nombres_productos.append(producto.nombre)
+
+    # productosComprados = ", ".join(nombres_productos)
+
+    data = { #Datos enviados para mostrar al finalizar compra
+        'estado' : estado,
+        'fecha' : fecha,
+        'monto' : resp.get('amount'),
+        'Ncuotas' : resp.get('installments_number'),
+        'tarjeta' :  resp.get('card_detail').get('card_number'),
+        'comprobante' :  resp.get('authorization_code'),
+        'ordenCompra' : resp.get('buy_order'),
+        'productos' : "productos"
+    }
+
+    if estado == 'FAILED':
+        return redirect('pagoFallido')
+    
+    else:
+        newHistorial = Historial(
+            email = resp.get('session_id'),
+            fecha = fecha,
+            total = resp.get('amount'),
+            tipoPago = False,
+            tipoUsuario = True, #momentaneo
+        )
+        newHistorial.save()
+            
+        # for key, value in request.session["carrito"].items():
+        #     carrito = Carrito(request)
+        #     newDetalle = DetalleCompra(
+        #         idHistorial = newHistorial.id,
+        #         idProducto = value["producto_id"],
+        #         cantidad = value["cantidad"]
+        #     )
+        #     newDetalle.save()
+        # for key, value in request.session["carrito"].items():
+        #     carrito = Carrito(request)
+        #     carrito.limpiar()
+        
+        # if TUsuario == False:
+        #     del request.session['email']
+        #     request.session.modified = True
+        
+        return render(request, 'core/pagoExitoso.html', data)
+    
 def pagoExitoso(request):
     return render(request, 'core/pagoExitoso.html')
 
