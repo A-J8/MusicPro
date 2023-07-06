@@ -41,16 +41,24 @@
 
 
 <!--API Tiempo-->
-<div class="tiempo"
-  style="color: #fff; display: flex; width: 100%; height: 200px; flex-direction: row;">
-  <div style="width: 50%; background-color: #004766; display: flex; align-items: end; justify-content: center; display: flex; flex-direction: column;">
+<div class="tiempo" style="color: #fff; display: flex; width: 100%; height: 200px; flex-direction: row;">
+  <div
+    style="width: 50%; background-color: #004766; display: flex; align-items: end; justify-content: center; display: flex; flex-direction: column;">
     <p style="padding-right: 3%; font-size: 30px; text-align: right;">El tiempo de nuestra sucursal en Melipilla</p>
   </div>
+  {% if error_message %}
+  <div class="temperatura"
+    style="width: 50%; background-color: #009EE2; display: flex; justify-content: center; flex-direction: column; padding-left: 2%;">
+    
+  <p>{{ error_message }}</p>
+  </div>
+  {% else %}
   {% if weather_data.weather %}
-  <div class="temperatura" style="width: 25%; background-color: #009EE2; display: flex; justify-content: center; flex-direction: column; padding-left: 2%;" >
+  <div class="temperatura"
+    style="width: 25%; background-color: #009EE2; display: flex; justify-content: center; flex-direction: column; padding-left: 2%;">
     <div style="font-size: 30px; ">
       <p style="font-size: 35px; margin-bottom: -10px; ">{{ fecha }}</p>
-      <p style="color: #015072; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">{{ weather_data.weather.0.description }}</p>
+      <p style="color: #015072; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">{{weather_data.weather.0.description }}</p>
     </div>
     <div style="display: flex; flex-direction: row; align-items: center; margin-top: -30px; ">
       <p style="font-size: xx-large; "> {{ weather_data.main.temp }} °C</p>
@@ -63,18 +71,21 @@
       <p style="font-size: 15px; margin-top: -20px;">Humedad: {{ weather_data.main.humidity }}%</p>
     </div>
   </div>
-  <div class="viento" style="width: 25%; background-color: #009EE2; font-size: x-large; display: flex; justify-content: center; flex-direction: column; padding-left: 2%;">
+  <div class="viento"
+    style="width: 25%; background-color: #009EE2; font-size: x-large; display: flex; justify-content: center; flex-direction: column; padding-left: 2%;">
     <li style="margin-top: -20px;"> La velocidad del Viento es de {{ weather_data.wind.speed }} m/s</li>
-    <li style="margin-top: 5px;">{{ weather_data.clouds.all }}% Nublado <img src="{% static 'core/img/nube.png' %}" alt="nube" style="width: 35px;"></li>
+    <li style="margin-top: 5px;">{{ weather_data.clouds.all }}% Nublado <img src="{% static 'core/img/nube.png' %}"
+        alt="nube" style="width: 35px;"></li>
   </div>
+  {% endif %}
 </div>
 
 <!--MARKETPLACE PRODUCTOS-->
 <div class="cuadroProductos">
   <h1 style="display: flex; justify-content: center; font-size: 500%;">Productos</h1>
-  
-  <button id="botonFiltro" class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-    aria-controls="offcanvasScrolling">Filtrar</button>
+
+  <button id="botonFiltro" class="btn btn-secondary" type="button" data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Filtrar</button>
 
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
     id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
@@ -86,11 +97,11 @@
       <div id="labelFiltro"> <a href="{% url 'index'  %}">Quitar Filtros</a> </div>
       <hr class="filtro-linea">
       {% for i in tipoProducto %}
-        <div id="labelFiltro"> <a href="{% url 'filtrar' i.id %}">{{i.nombre}}</a> </div>
+      <div id="labelFiltro"> <a href="{% url 'filtrar' i.id %}">{{i.nombre}}</a> </div>
       {% endfor %}
     </div>
   </div>
-  
+
   <div class="row row-cols-3">
     {% for i in productos %}
     <div class="col-sm-4 mb-4">
@@ -104,8 +115,8 @@
         <p>stock: {{i.stock}}</p>
         <a href="{% url 'producto' i.id %}" class="btn btn-secondary">Mirar producto</a>
         {% if i.stock > 0 %}
-          <a href="{% url 'Add' i.id %}" class="btn btn-secondary"> <img src="{% static 'core/img/iconcarrito.png' %}"
-              alt="" style="width: 20px;"> Agregar al carrito</a>
+        <a href="{% url 'Add' i.id %}" class="btn btn-secondary"> <img src="{% static 'core/img/iconcarrito.png' %}"
+            alt="" style="width: 20px;"> Agregar al carrito</a>
         {% else %}
         <a href="#" class="btn btn-danger" style="pointer-events: none;"> Sin Stock</a>
         {% endif %}

@@ -27,6 +27,7 @@ def index(request):
     lat = -33.685983770235346
     lon = -71.21694948040461
     weather_data = get_weather_data(api_key, lat, lon)
+    
     print(weather_data)
 
     fecha_actual = datetime.now()
@@ -34,14 +35,24 @@ def index(request):
     locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
     # Formatear la fecha en español
     fecha_formateada = fecha_actual.strftime('%A %d de %B')
+    if 'error' in weather_data:
+            # Manejar el error y mostrar el mensaje "No disponible"
+        error_message = weather_data['error']
+        contexto = {
+            'productos' : Producto.objects.all(),
+            'tipoProducto' : TipoProducto.objects.all(),
+            "weather_data": weather_data,
+            "fecha": fecha_formateada,
+            'error_message': error_message
+            }
+    else:
+        contexto = {
+            'productos' : Producto.objects.all(),
+            'tipoProducto' : TipoProducto.objects.all(),
+            "weather_data": weather_data,
+            "fecha": fecha_formateada
+            }
 
-    contexto = {
-        'productos' : Producto.objects.all(),
-        'tipoProducto' : TipoProducto.objects.all(),
-        "weather_data": weather_data,
-        "fecha": fecha_formateada
-        }
-    print(date)
     return render(request,'core/index.html', contexto)
 
 def filtrar(request, id):
@@ -87,21 +98,34 @@ def pago(request, email):
                     mensaje = "Usted tiene un descuento del 10% por estar registrado y hacer una compra de mas de 4 productos!"
     usuario = Usuario.objects.get(email = email)
 
-     
-    series = dolar['Series']
-    obs = series['Obs']
-    cero = obs[0]
-    value = cero["value"]
-    valor_dolar = float(value)
-    print( value)
-    total_dolar = round(total / valor_dolar, 2)
-    data = {
+  
+   
+    if 'error' in dolar:
+            # Manejar el error y mostrar el mensaje "No disponible"
+        error_message = dolar['error']
+        data = {
+        'usuario': usuario,
+        'totalD' : total,
+        'mensaje' : mensaje,
+        'dolar' : dolar,
+        'error_message' : error_message
+    }
+    else:
+        series = dolar['Series']
+        obs = series['Obs']
+        cero = obs[0]
+        value = cero["value"]
+        valor_dolar = float(value)
+        print( value)
+        total_dolar = round(total / valor_dolar, 2)
+        data = {
         'usuario': usuario,
         'totalD' : total,
         'total_dolar' : total_dolar,
         'mensaje' : mensaje,
         'dolar' : dolar
     }
+    print(dolar)
     return render(request,'core/pago.html' ,  data)
 
 

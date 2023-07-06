@@ -47,8 +47,13 @@
                 <br>
                 <div id="total">
                     <td>Total a pagar   :  ${{totalD}} CLP</td> <br>
+
+                    {% if error_message %}
+                        <p style="color: red;">{{ error_message }}</p>
+                    {% else %}
                     <td colspan="3">Valor en Dolar :  ${{total_dolar}} </td>
                     <p>El valor del dólar en Chile es:  ${{ dolar.Series.Obs.0.value }} CLP</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
