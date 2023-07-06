@@ -11,6 +11,7 @@ from .models import DetalleCompra
 import requests
 from .apibanco import obtener_valor_dolar
 from django.http import JsonResponse
+import json
 # Create your views here.
 
 #API del tiempo
@@ -85,9 +86,19 @@ def pago(request, email):
                     total = total * 0.9
                     mensaje = "Usted tiene un descuento del 10% por estar registrado y hacer una compra de mas de 4 productos!"
     usuario = Usuario.objects.get(email = email)
+
+     
+    series = dolar['Series']
+    obs = series['Obs']
+    cero = obs[0]
+    value = cero["value"]
+    valor_dolar = float(value)
+    print( value)
+    total_dolar = round(total / valor_dolar, 2)
     data = {
         'usuario': usuario,
         'totalD' : total,
+        'total_dolar' : total_dolar,
         'mensaje' : mensaje,
         'dolar' : dolar
     }
@@ -105,8 +116,25 @@ def pagoInvitado1(request):
     api_key = "user=211730625&pass=uVYeQQAvWY3J"
     serie1 = "F073.TCO.PRE.Z.D"
     dolar = obtener_valor_dolar(fecha, api_key,serie1)
+
+    total = 0
+    cantidadTotal = 0
+    if 'carrito' in request.session:
+        for key, value in request.session["carrito"].items():
+            total += int(value["acumulado"])
+            cantidadTotal += int(value["cantidad"])
+
+    series = dolar['Series']
+    obs = series['Obs']
+    cero = obs[0]
+    value = cero["value"]
+    valor_dolar = float(value)
+    print( value)
+    total_dolar = round(total / valor_dolar, 2)
+
     dolar = {
-        'dolar' : dolar
+        'dolar' : dolar,
+        'total_dolar' : total_dolar
     }
     return render(request,'core/pagoInvitado.html', dolar)
 
@@ -615,7 +643,7 @@ def CrearTransaccion(request):
     return redirect(redirect_url)
 
 
-def RetornoTransaccion2(request): #esta tienen los errores en request
+def RetornoTransaccion(request): #esta tienen los errores en request
     token_ws = request.GET.get('token_ws')  # Obtener el token de la transacción desde la URL
     if not token_ws:
         return redirect('pagoFallido') 
@@ -699,7 +727,7 @@ def recorrer_productos(request):
     return productosComprados
 
 
-def RetornoTransaccion(request):
+def RetornoTransaccion2(request):
     token_ws = request.GET.get('token_ws')  # Obtener el token de la transacción desde la URL
     if not token_ws:
         return redirect('pagoFallido') 

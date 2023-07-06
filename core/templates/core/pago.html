@@ -39,19 +39,17 @@
         <div class="precio">
 
             <div class="monto">
-                <p>El valor del dólar en Chile es:  ${% for item in dolar.Series.Obs %}{{ item.value }}{% endfor %}</p>
                 <br>
-                <h2>Total</h2>
-                <div id="total">
-                    <td colspan="3">${{total_carrito}} CLP</td>
-                </div>
+                <h4>Subtotal carrito ${{total_carrito}} CLP</h4>
+
                 <td>{{mensaje}}</td>
-
+                <br>
+                <br>
                 <div id="total">
-                    <td>Total a pagar:</td>
-                    <td colspan="3">${{totalD}} CLP</td>
+                    <td>Total a pagar   :  ${{totalD}} CLP</td> <br>
+                    <td colspan="3">Valor en Dolar :  ${{total_dolar}} </td>
+                    <p>El valor del dólar en Chile es:  ${{ dolar.Series.Obs.0.value }} CLP</p>
                 </div>
-
             </div>
         </div>
     </div>
@@ -97,7 +95,7 @@
             <select id="metodoPago" name="metodoPago" class="form-select" aria-label="Default select example">
                 <option disabled selected>Seleccion el tipo de pago</option>
                 <option value="1">WebPay</option>
-                <option value="2">Transbank</option>
+                <option value="2">Transferencia</option>
             </select>
             <br>
             <button type="submit" class="btn btn-dark" id="pagar">Pagar</button>
