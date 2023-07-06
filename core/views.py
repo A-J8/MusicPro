@@ -19,7 +19,7 @@ import locale
 from django.conf import settings
 from rest_framework import generics
 from .serializers import ProductoSerializer
-   
+
 def index(request):
     api_key = "7a57daf636775b047f328f8d78cf057a"
     #Coordenadas de Simulacion Local de Melipilla
@@ -688,6 +688,16 @@ def RetornoTransaccion2(request): #esta tienen los errores en request
         
         return render(request, 'core/pagoExitoso.html', data)
 
+def recorrer_productos(request):
+    nombres_productos = []    #Aqui se crea un lista para pasar los productos comprados
+    if 'carrito' in request.session:
+        for key, value in request.session["carrito"].items():
+            producto = Producto.objects.get(id=value["producto_id"])
+            nombres_productos.append(producto.nombre)
+
+    productosComprados = ", ".join(nombres_productos)
+    return productosComprados
+
 
 def RetornoTransaccion(request):
     token_ws = request.GET.get('token_ws')  # Obtener el token de la transacción desde la URL
@@ -711,14 +721,7 @@ def RetornoTransaccion(request):
     #     TUsuario = True
     # else:
     #     TUsuario = False
-
-    # nombres_productos = []    #Aqui se crea un lista para pasar los productos comprados
-    # if 'carrito' in request.session:
-    #     for key, value in request.session["carrito"].items():
-    #         producto = Producto.objects.get(id=value["producto_id"])
-    #         nombres_productos.append(producto.nombre)
-
-    # productosComprados = ", ".join(nombres_productos)
+    productos_carrito = recorrer_productos(request)
 
     data = { #Datos enviados para mostrar al finalizar compra
         'estado' : estado,
@@ -728,7 +731,7 @@ def RetornoTransaccion(request):
         'tarjeta' :  resp.get('card_detail').get('card_number'),
         'comprobante' :  resp.get('authorization_code'),
         'ordenCompra' : resp.get('buy_order'),
-        'productos' : "productos"
+        'productos' : productos_carrito
     }
 
     if estado == 'FAILED':
